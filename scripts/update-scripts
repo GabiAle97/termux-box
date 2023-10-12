@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd $HOME/termux-box/ubuntu-fs/opt
+
+wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>/dev/null
+mkdir tempscripts
+tar -xf scripts.tar.gz -C tempscripts
+rm -rf scripts.tar.gz
+
+cd tempscripts
+cp -n *.conf .. &>/dev/null
+cp Env.conf /sdcard/termux-box
+cp Env.conf ..
+rm -rf *.conf
+mv * ..
+cd ..
+rm -rf tempscripts

@@ -1,0 +1,82 @@
+#!/bin/bash
+
+cd
+echo "Termux-box modified by GabiAle97 Exclusive for RE7"
+echo "Сlick on allow to proceed"
+termux-setup-storage & sleep 4 &>/dev/null
+
+while true; do
+    if [ -e storage ]; then
+        rm -rf /sdcard/termux-box
+        break
+    else
+        echo "If you denied permission, change it manually in termux app settings now"
+    fi
+    sleep 2
+done
+
+mkdir -p /sdcard/termux-box
+
+echo ""
+echo "Updating termux packages"
+apt-get clean
+apt-get update >/dev/null 2>&1
+apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade >/dev/null 2>&1
+
+echo ""
+echo "Installing necessary packages"
+pkg install x11-repo -y &>/dev/null
+pkg install pulseaudio -y &>/dev/null
+pkg install xwayland -y &>/dev/null
+pkg install proot -y &>/dev/null
+pkg install wget -y &>/dev/null
+pkg install tsu -y &>/dev/null
+pkg install root-repo -y &>/dev/null
+
+rm -rf $HOME/termux-box
+mkdir -p $HOME/termux-box
+cd $HOME/termux-box
+
+wget https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb &>/dev/null
+dpkg -i termux-x11-1.02.07-0-all.deb &>/dev/null
+rm -rf termux-x11-1.02.07-0-all.deb
+
+echo "Downloading preconfigured Rootfs..."
+cd $HOME/termux-box
+wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
+
+echo "Unzipping Rootfs..."
+tar -xf rootfs.tar.xz
+rm -rf rootfs.tar.xz
+
+cd $HOME/termux-box/ubuntu-fs/opt
+wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>/dev/null
+tar -xf scripts.tar.gz
+rm -rf scripts.tar.gz
+
+cd $HOME/termux-box/
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box &>/dev/null
+chmod +x termux-box
+mv termux-box $PREFIX/bin/
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh &>/dev/null
+chmod +x start-proot.sh
+chmod +x start-chroot.sh
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts &>/dev/null
+chmod +x update-scripts
+
+echo "Installing patch"
+
+cd $HOME/termux-box/ubuntu-fs
+wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
+rm -rf opt/d3d
+rm -rf opt/mesa
+tar -xf patch.tar.xz
+rm -rf patch.tar.xz
+cd
+
+echo "Starting termux-box now. Next time use \"termux-box\" command to run it."
+sleep 2
+
+rm -rf "$0"
+exec $PREFIX/bin/termux-box
