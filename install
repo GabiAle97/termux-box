@@ -60,7 +60,7 @@ if [ -e $HOME/developers-choice ]
 then
     touch developers-choice
 fi
-wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>/dev/null
+wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz &>/dev/null
 tar -xf scripts.tar.gz
 rm -rf scripts.tar.gz
 
