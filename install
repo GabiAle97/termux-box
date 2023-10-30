@@ -43,13 +43,23 @@ rm -rf termux-x11-1.02.07-0-all.deb
 
 echo "Downloading preconfigured Rootfs..."
 cd $HOME/termux-box
-wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
+if [ -e developers-choice ]
+then
+    wget -q --show-progress https://github.com/GabiAle97/FexDroid/releases/download/FexDroid/rootfs-termux-test.tar.xz -O rootfs.tar.xz
+else
+    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
+fi
 
 echo "Unzipping Rootfs..."
 tar -xf rootfs.tar.xz
 rm -rf rootfs.tar.xz
 
+
 cd $HOME/termux-box/ubuntu-fs/opt
+if [ -e developers-choice ]
+then
+    touch developers-choice
+fi
 wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>/dev/null
 tar -xf scripts.tar.gz
 rm -rf scripts.tar.gz
