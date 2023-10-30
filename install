@@ -43,7 +43,7 @@ rm -rf termux-x11-1.02.07-0-all.deb
 
 echo "Downloading preconfigured Rootfs..."
 cd $HOME/termux-box
-if [ -e developers-choice ]
+if [ -e $HOME/developers-choice ]
 then
     wget -q --show-progress https://github.com/GabiAle97/FexDroid/releases/download/FexDroid/rootfs-termux-test.tar.xz -O rootfs.tar.xz
 else
@@ -56,7 +56,7 @@ rm -rf rootfs.tar.xz
 
 
 cd $HOME/termux-box/ubuntu-fs/opt
-if [ -e developers-choice ]
+if [ -e $HOME/developers-choice ]
 then
     touch developers-choice
 fi
