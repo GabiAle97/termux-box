@@ -20,7 +20,7 @@ if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
   then 
     rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
     cd ~/
-    curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/install && chmod +x install && ./install
+    curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x install && ./install
     echo "$latest_commit" > latest_commit.txt
   fi
 else
