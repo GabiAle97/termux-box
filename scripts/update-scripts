@@ -1,17 +1,58 @@
 #!/bin/bash
 
-cd $HOME/termux-box/ubuntu-fs/opt
+if [ ! -f latest_commit.txt ]
+then
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1" | jq -r '.[0].sha' > latest_commit.txt
+fi
 
-wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>/dev/null
-mkdir tempscripts
-tar -xf scripts.tar.gz -C tempscripts
-rm -rf scripts.tar.gz
+# Get the latest commit SHA from the repository
+latest_commit=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1" | jq -r '.[0].sha')
 
-cd tempscripts
-cp -n *.conf .. &>/dev/null
-cp Env.conf /sdcard/termux-box
-cp Env.conf ..
-rm -rf *.conf
-mv * ..
-cd ..
-rm -rf tempscripts
+echo "$latest_commit"
+cat latest_commit.txt
+# Check if the latest commit SHA is different from the one you have
+if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
+  echo "There is a new commit!"
+  echo "Do you want to perform a FULL update of termux-box now? (Y/N)"
+  echo ""
+  read confirm
+  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
+  then 
+    rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
+    cd ~/
+    curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/install && chmod +x install && ./install
+    echo "$latest_commit" > latest_commit.txt
+  fi
+else
+  echo "No new commits."
+fi
+
+if [ ! -f latest_release.txt ]
+then
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at' > latest_release.txt
+fi
+
+# Get the latest release tag from the repository
+latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at')
+
+# Check if the latest release tag is different from the one you have
+if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
+  echo "There is a new release!"
+  echo "It's STRONGLY recommended to update this, since it would come with some fixes and/or new wine/turnip versions,"
+  echo "but it isn't mandatory if you're happy with the actual performance."
+  echo "Continue updating? (Y/N)"
+  echo ""
+  read confirm
+  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
+  then 
+      cd $HOME/termux-box/ubuntu-fs/opt/
+      wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz
+      tar -xf scripts.tar.gz
+      rm -rf scripts.tar.gz
+  fi
+  cd ~
+  echo "$latest_release" > latest_release.txt
+  touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
+else
+  echo "No new releases."
+fi
