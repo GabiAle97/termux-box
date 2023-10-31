@@ -38,7 +38,7 @@ latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/rele
 # Check if the latest release tag is different from the one you have
 if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
   echo "There is a new release!"
-  echo "It's STRONGLY recommended to update this, since it would come with some fixes and/or new wine/turnip versions,"
+  echo "It's STRONGLY recommended to update this, since it would come with some new functions and wine-custom versions,"
   echo "but it isn't mandatory if you're happy with the actual performance."
   echo "Continue updating? (Y/N)"
   echo ""
@@ -53,6 +53,39 @@ if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
       rm script.conf
       mv script.conf.backup script.conf
       echo "$latest_release" > $HOME/termux-box/latest_release.txt
+  fi
+  cd ~
+  touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
+else
+  echo "No new releases."
+fi
+
+if [ ! -f latest_patch.txt ]
+then
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "patch.tar.zx").updated_at' > latest_patch.txt
+fi
+
+# Get the latest release tag from the repository
+latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "patch.tar.zx").updated_at')
+
+# Check if the latest release tag is different from the one you have
+if [ "$latest_release" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
+  echo "There is a new patch!"
+  echo "It's STRONGLY recommended to update this, since it would come with some fixes and/or new turnip/dxvk/vkd3d/wined3d versions,"
+  echo "but it isn't mandatory if you're happy with the actual performance."
+  echo "Continue updating? (Y/N)"
+  echo ""
+  read confirm
+  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
+  then 
+      cd $HOME/termux-box/ubuntu-fs
+      wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
+      rm -rf opt/d3d
+      rm -rf opt/mesa
+      tar -xf patch.tar.xz
+      rm -rf patch.tar.xz
+      cd
+      echo "$latest_release" > $HOME/termux-box/latest_patch.txt
   fi
   cd ~
   touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
