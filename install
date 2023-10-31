@@ -32,6 +32,7 @@ pkg install proot -y &>/dev/null
 pkg install wget -y &>/dev/null
 pkg install tsu -y &>/dev/null
 pkg install root-repo -y &>/dev/null
+pkg install jq -y &>/dev/null
 
 rm -rf $HOME/termux-box
 mkdir -p $HOME/termux-box

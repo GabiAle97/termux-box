@@ -46,12 +46,15 @@ if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
   if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
   then 
       cd $HOME/termux-box/ubuntu-fs/opt/
+      mv script.conf script.conf.backup
       wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz
       tar -xf scripts.tar.gz
       rm -rf scripts.tar.gz
+      rm script.conf
+      mv script.conf.backup script.conf
+      echo "$latest_release" > $HOME/termux-box/latest_release.txt
   fi
   cd ~
-  echo "$latest_release" > latest_release.txt
   touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
 else
   echo "No new releases."
