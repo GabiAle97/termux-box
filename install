@@ -46,7 +46,7 @@ echo "Downloading preconfigured Rootfs..."
 cd $HOME/termux-box
 if [ -e $HOME/developers-choice ]
 then
-    wget -q --show-progress https://github.com/GabiAle97/FexDroid/releases/download/FexDroid/rootfs-termux-test.tar.xz -O rootfs.tar.xz
+    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
 else
     wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
 fi
