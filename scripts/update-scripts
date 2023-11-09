@@ -76,7 +76,7 @@ if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
   read confirm
   if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
   then 
-      cd $HOME/termux-box/ubuntu-fs
+      cd $HOME/termux-box/ubuntu-fs/opt
       wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
       rm -rf opt/d3d
       rm -rf opt/mesa
