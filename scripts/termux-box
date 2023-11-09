@@ -4,24 +4,20 @@ cd $HOME/termux-box
 
 if [ ! -e ubuntu-fs/opt/wine ]; then
     echo "Select which Wine to download"
-    echo "1) 8.2 staging"
-    echo "2) 8.15 ge-custom"
+    echo "1) 8.19 staging"
+    echo "2) 8.22 ge-custom"
     read opcode
     case $opcode in
     1)
-    if ! wget -q --show-progress https://github.com/Kron4ek/Wine-Builds/releases/download/8.2/wine-8.2-staging-amd64.tar.xz -O ubuntu-fs/opt/wine.tar.xz; then
+    if ! wget -q --show-progress https://github.com/Kron4ek/Wine-Builds/releases/download/8.19/wine-8.19-staging-amd64.tar.xz -O ubuntu-fs/opt/wine.tar.xz; then
     echo "Download failed, restart termux-box"
     exit
-    else
-    tar -xf ubuntu-fs/opt/box/old-box.tar.xz -C ubuntu-fs/usr/local/bin
     fi
     ;;
     2)
-    if ! wget -q --show-progress https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-15/wine-lutris-GE-Proton8-15-x86_64.tar.xz -O ubuntu-fs/opt/wine.tar.xz; then
+    if ! wget -q --show-progress https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-22/wine-lutris-GE-Proton8-22-x86_64.tar.xz -O ubuntu-fs/opt/wine.tar.xz; then
     echo "Download failed, restart termux-box"
     exit
-    else
-    tar -xf ubuntu-fs/opt/box/new-box.tar.xz -C ubuntu-fs/usr/local/bin
     fi
     ;;
     esac
