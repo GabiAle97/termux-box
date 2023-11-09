@@ -44,9 +44,13 @@ rm -rf termux-x11-1.02.07-0-all.deb
 
 echo "Downloading preconfigured Rootfs..."
 cd $HOME/termux-box
-if [ -e $HOME/developers-choice ]
+echo "Select your desired core system:"
+echo "1) Default Jammy (stable, missing libs)"
+echo "2) Enhanced Mantic (Performance, useful for Wine-GE)"
+read core
+if [ $core = 2 ]
 then
-    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
+    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz
 else
     wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
 fi
@@ -57,9 +61,9 @@ rm -rf rootfs.tar.xz
 
 
 cd $HOME/termux-box/ubuntu-fs/opt
-if [ -e $HOME/developers-choice ]
+if [ $core = 2 ]
 then
-    touch developers-choice
+    touch $HOME/termux-box/ubuntu-fs/opt/mantic-core-system
 fi
 wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz &>/dev/null
 tar -xf scripts.tar.gz
