@@ -78,8 +78,8 @@ if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
   then 
       cd $HOME/termux-box/ubuntu-fs/opt
       wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
-      rm -rf opt/d3d
-      rm -rf opt/mesa
+      rm -rf d3d
+      rm -rf mesa
       tar -xf patch.tar.xz
       rm -rf patch.tar.xz
       cd

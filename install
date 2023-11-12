@@ -84,12 +84,17 @@ echo "Installing patch"
 
 cd $HOME/termux-box/ubuntu-fs/opt
 wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
-rm -rf opt/d3d
-rm -rf opt/mesa
+rm -rf d3d
+rm -rf mesa
 tar -xf patch.tar.xz
 rm -rf patch.tar.xz
-cd
 
+curl -s "https://api.github.com/repos/GloriousEggroll/wine-ge-custom/releases" | jq -r '.[].name' | wc -l > countge
+curl -s "https://api.github.com/repos/Kron4ek/Wine-Builds/releases" | jq -r '.[].name' | wc -l > countkron
+curl -s "https://api.github.com/repos/HansKristian-Work/vkd3d-proton/releases" | jq -r '.[].name' | wc -l > countvkd3d
+expr $(cat countge) + $(cat countkron) > totalcount
+
+cd
 echo "Starting termux-box now. Next time use \"termux-box\" command to run it."
 sleep 2
 
