@@ -60,11 +60,11 @@ fi
 
 if [ ! -f latest_patch.txt ]
 then
-    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "patch.tar.zx").updated_at' > latest_patch.txt
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/124714593" | jq -r '.assets[] | select(.name == "patch.tar.xz").updated_at' > latest_patch.txt
 fi
 
 # Get the latest release tag from the repository
-latest_patch=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "patch.tar.zx").updated_at')
+latest_patch=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/124714593" | jq -r '.assets[] | select(.name == "patch.tar.xz").updated_at')
 
 # Check if the latest release tag is different from the one you have
 if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
