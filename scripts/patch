@@ -11,6 +11,8 @@ cd tempscripts
 cp -n *.conf .. &>/dev/null
 cp Env.conf /sdcard/termux-box
 cp Env.conf ..
+cp vkd3d.conf /sdcard/termux-box
+cp vkd3d.conf ..
 rm -rf *.conf
 mv * ..
 cd ..
@@ -26,13 +28,13 @@ wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh
 chmod +x start-proot.sh
 chmod +x start-chroot.sh
 
-cd $HOME/termux-box/ubuntu-fs
-touch opt/prefix-apply-patch
+cd $HOME/termux-box/ubuntu-fs/opt
+touch prefix-apply-patch
 
 rm -rf patch.tar.xz
 wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
-rm -rf opt/d3d
-rm -rf opt/mesa
+rm -rf d3d
+rm -rf mesa
 tar -xf patch.tar.xz
 rm -rf patch.tar.xz
 

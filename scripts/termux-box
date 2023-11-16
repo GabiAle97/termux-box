@@ -43,6 +43,7 @@ pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth
 mkdir /sdcard/termux-box >/dev/null 2>&1
 cp -n ubuntu-fs/opt/Env.conf /sdcard/termux-box >/dev/null 2>&1
 cp -n ubuntu-fs/opt/dxvk.conf /sdcard/termux-box >/dev/null 2>&1
+cp -n ubuntu-fs/opt/vkd3d.conf /sdcard/termux-box >/dev/null 2>&1
 negus=$(cat ubuntu-fs/opt/script.conf)
 if [ "$negus" = "" ]; then
     echo ""
