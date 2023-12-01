@@ -44,12 +44,17 @@ if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
   if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
   then 
       cd $HOME/termux-box/ubuntu-fs/opt/
-      mv script.conf script.conf.backup
+      for file in *.conf; do
+        filename=$(basename "$file" .conf)
+        mv "$file" "$filename.conf.backup"
+      done
       wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz
       tar -xf scripts.tar.gz
       rm -rf scripts.tar.gz
-      rm script.conf
-      mv script.conf.backup script.conf
+      for file in *.conf.backup; do
+        filename=$(basename "$file" .conf.backup)
+        mv "$file" "$filename.conf"
+      done
       echo "$latest_release" > $HOME/termux-box/latest_release.txt
   fi
   cd ~
