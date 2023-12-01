@@ -6,6 +6,7 @@ if [ ! -e ubuntu-fs/opt/wine ]; then
     echo "Select which Wine to download"
     echo "1) 8.19 staging"
     echo "2) 8.22 ge-custom"
+    echo "3) 8.0 proton experimental"
     read opcode
     case $opcode in
     1)
@@ -19,6 +20,13 @@ if [ ! -e ubuntu-fs/opt/wine ]; then
     echo "Download failed, restart termux-box"
     exit
     fi
+    ;;
+    3)
+    if ! wget -q --show-progress https://github.com/Kron4ek/Wine-Builds/releases/download/proton-exp-8.0/wine-proton-exp-8.0-amd64.tar.xz -O ubuntu-fs/opt/wine.tar.xz; then
+    echo "Download failed, restart termux-box"
+    exit
+    fi
+    touch ubuntu-fs/opt/patch-re8
     ;;
     esac
 fi
