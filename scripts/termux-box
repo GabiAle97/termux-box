@@ -2,6 +2,10 @@
 
 cd $HOME/termux-box
 
+. $HOME/termux-box/ubuntu-fs/opt/termux-style/termux-style
+
+apply-termux-style
+
 if [ ! -e ubuntu-fs/opt/wine ]; then
     echo "Select which Wine to download"
     echo "1) 8.19 staging"
@@ -83,6 +87,8 @@ pulseaudio -k >/dev/null 2>&1
 pkill -f pulseaudio
 pkill -f proot
 pkill -f "app_process / com.termux.x11"
+
+restore-termux-style
 
 if [ -e ~/termux-box/ubuntu-fs/opt/restart-termux-box ]; then
     rm -rf ~/termux-box/ubuntu-fs/opt/restart-termux-box
