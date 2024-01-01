@@ -1,102 +1,151 @@
 #!/bin/bash
 
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/dialogs -O $HOME/dialogs &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/dialog.rc -O $HOME/dialog.rc &>/dev/null
+. $HOME/dialogs
+
 cd
-echo "Termux-box modified by GabiAle97 Exclusive for RE7"
-echo "Сlick on allow to proceed"
-termux-setup-storage & sleep 4 &>/dev/null
+
+dialog_loading "Asking for storage permission" &
+cargando_pid=$!
+termux-setup-storage & &>/dev/null
+wait $!
+kill $cargando_pid
 
 while true; do
     if [ -e storage ]; then
         rm -rf /sdcard/termux-box
         break
     else
-        echo "If you denied permission, change it manually in termux app settings now"
+        dialog_loading "Storage permission has not been granted.\nWaiting for manually allowing" &
+        cargando_pid=$!
     fi
     sleep 2
 done
+kill $cargando_pid
 
 mkdir -p /sdcard/termux-box
 
-echo ""
-echo "Updating termux packages"
-apt-get clean
-apt-get update >/dev/null 2>&1
-apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade >/dev/null 2>&1
+dialog_loading "Updating termux packages" &
+cargando_pid=$!
+apt-get clean & >/dev/null 2>&1
+wait $!
+apt-get update & >/dev/null 2>&1
+wait $!
+apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade & >/dev/null 2>&1
+wait $!
+kill $cargando_pid
 
-echo ""
-echo "Installing necessary packages"
-pkg install x11-repo -y &>/dev/null
-pkg install pulseaudio -y &>/dev/null
-pkg install xwayland -y &>/dev/null
-pkg install proot -y &>/dev/null
-pkg install wget -y &>/dev/null
-pkg install tsu -y &>/dev/null
-pkg install root-repo -y &>/dev/null
-pkg install jq -y &>/dev/null
+dialog_loading "Installing necessary packages" &
+cargando_pid=$!
+pkg install x11-repo pulseaudio xwayland proot wget tsu root-repo jq -y & &>/dev/null
+wait $!
+kill $cargando_pid
 
 rm -rf $HOME/termux-box
 mkdir -p $HOME/termux-box
 cd $HOME/termux-box
 
-wget https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb &>/dev/null
-dpkg -i termux-x11-1.02.07-0-all.deb &>/dev/null
-rm -rf termux-x11-1.02.07-0-all.deb
+dialog_loading "Obtaining & installing Termux-X11 server" &
+cargando_pid=$!
+wget https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb & &>/dev/null
+wait $!
+dpkg -i termux-x11-1.02.07-0-all.deb & &>/dev/null
+wait $!
+rm -rf termux-x11-1.02.07-0-all.deb & &>/dev/null
+wait $!
+kill $cargando_pid
 
-echo "Downloading preconfigured Rootfs..."
+
 cd $HOME/termux-box
-echo "Select your desired core system:"
-echo "1) Default Jammy (stable, missing libs)"
-echo "2) Enhanced Mantic (Performance, useful for Wine-GE)"
-read core
-if [ $core = 2 ]
-then
-    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz
-else
-    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz
-fi
+dialog_menu "Termux-Box" "Download preconfigured Rootfs" \
+"1" "Default Jammy (stable, missing libs)" \
+"2" "Enhanced Mantic (Performance, useful for Wine-GE)" 
+while true; do
+    case $? in
+    1)
+        dialog_loading "Downloading Default Jammy" &
+        cargando_pid=$!
+        wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz & &>/dev/null
+        wait $!
+        kill $cargando_pid
+        ;;
+    2)
+        dialog_loading "Downloading Enhanced Mantic" &
+        cargando_pid=$!
+        wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz & &>/dev/null
+        wait $!
+        kill $cargando_pid
+        ;;
+    255)
+        break
+        ;;
+    esac
+done
 
-echo "Unzipping Rootfs..."
-tar -xf rootfs.tar.xz
-rm -rf rootfs.tar.xz
-
+dialog_loading "Unzipping Rootfs" &
+cargando_pid=$!
+tar -xf rootfs.tar.xz & &>/dev/null
+wait $!
+rm -rf rootfs.tar.xz & &>/dev/null
+wait $!
+kill $cargando_pid
 
 cd $HOME/termux-box/ubuntu-fs/opt
 if [ $core = 2 ]
 then
     touch $HOME/termux-box/ubuntu-fs/opt/mantic-core-system
 fi
-wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz &>/dev/null
-tar -xf scripts.tar.gz
-rm -rf scripts.tar.gz
+dialog_loading "Downloading & unziping scripts" &
+cargando_pid=$!
+wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz & &>/dev/null
+wait $!
+tar -xf scripts.tar.gz & &>/dev/null
+wait $!
+rm -rf scripts.tar.gz & &>/dev/null
+wait $!
 
 cd $HOME/termux-box/
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box & &>/dev/null
+wait $!
 chmod +x termux-box
 mv termux-box $PREFIX/bin/
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh &>/dev/null
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh & &>/dev/null
+wait $!
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh & &>/dev/null
+wait $!
 chmod +x start-proot.sh
 chmod +x start-chroot.sh
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts & &>/dev/null
+wait $!
 chmod +x update-scripts
 
-echo "Installing patch"
+kill $cargando_pid
 
+dialog_loading "Installing patches" &
+cargando_pid=$!
 cd $HOME/termux-box/ubuntu-fs/opt
-wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
-rm -rf d3d
-rm -rf mesa
-tar -xf patch.tar.xz
-rm -rf patch.tar.xz
+wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz & &>/dev/null
+wait $!
+rm -rf d3d & &>/dev/null
+rm -rf mesa & &>/dev/null
+wait $!
+wait $!
+tar -xf patch.tar.xz & &>/dev/null
+wait $!
+rm -rf patch.tar.xz & &>/dev/null
+wait $!
 
 curl -s "https://api.github.com/repos/GloriousEggroll/wine-ge-custom/releases" | jq -r '.[].name' | wc -l > countge
 curl -s "https://api.github.com/repos/Kron4ek/Wine-Builds/releases" | jq -r '.[].name' | wc -l > countkron
 curl -s "https://api.github.com/repos/HansKristian-Work/vkd3d-proton/releases" | jq -r '.[].name' | wc -l > countvkd3d
 expr $(cat countge) + $(cat countkron) > totalcount
 
+kill $cargando_pid
+
 cd
-echo "Starting termux-box now. Next time use \"termux-box\" command to run it."
-sleep 2
+
+dialog_message "Termux-Box Mod" "Successfully installed!"
 
 rm -rf "$0"
 exec $PREFIX/bin/termux-box

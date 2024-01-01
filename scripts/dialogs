@@ -1,0 +1,52 @@
+#!/bin/bash
+
+export DIALOGRC=$HOME/dialog.rc
+dialog_flags="--colors --output-fd 1 --erase-on-exit --no-shadow --cursor-off-label --no-kill"
+
+function dialog_menu {
+	tput civis
+	result=$(dialog $dialog_flags --title "$1" --menu "$2
+
+Select an option and click OK" 100 100 100 "${@:3}")
+	if [ "$result" = "" ]; then result=255; fi
+	tput cnorm
+	return $result
+}
+
+function dialog_menu_item {
+	tput civis
+	result=$(dialog --default-item "$1" $dialog_flags --title "$2" --menu "$3
+
+Select an option and click OK" 100 100 100 "${@:4}")
+	if [ "$result" = "" ]; then result=255; fi
+	tput cnorm
+	return $result
+}
+
+function dialog_yesno {
+	tput civis
+	while true; do
+		dialog --erase-on-exit --no-shadow --cursor-off-label --no-kill --no-cancel --yesno "$1" 0 0
+		result=$?
+		if ! [ "$result" = "255" ]; then return $result; fi
+	done
+	tput cnorm
+}
+
+function dialog_message {
+	tput civis
+	if [ $3 ]; then dialog --ok-label "$3" $dialog_flags --title "$1" --msgbox "$2" 0 0; else dialog $dialog_flags --title "$1" --msgbox "$2" 0 0; fi
+	tput cnorm
+}
+
+
+function dialog_loading {
+    while :; do
+        (dialog --infobox "$1." 0 0; sleep 0.5) &
+        sleep 0.5
+        (dialog --infobox "$1.." 0 0; sleep 0.5) &
+		sleep 0.5
+        (dialog --infobox "$1..." 0 0; sleep 0.5) &
+        sleep 0.5
+    done
+}
