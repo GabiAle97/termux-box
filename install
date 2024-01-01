@@ -1,7 +1,7 @@
 #!/bin/bash
 
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/dialogs -O $HOME/dialogs &>/dev/null
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/dialog.rc -O $HOME/dialog.rc &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/dialogs &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/dialog.rc &>/dev/null
 . $HOME/dialogs
 
 cd
