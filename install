@@ -1,7 +1,7 @@
 #!/bin/bash
 
-curl -s -o dialogs https://github.com/GabiAle97/termux-box/raw/main/scripts/dialogs &>/dev/null
-curl -s -o dialog.rc https://github.com/GabiAle97/termux-box/raw/main/scripts/dialog.rc &>/dev/null
+curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
+curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
 . $HOME/dialogs
 
 cd
