@@ -49,11 +49,3 @@ function dialog_loading {
         sleep 0.5
     done
 }
-
-dialog_loading "Updating termux packages" &
-cargando_pid=$!
-apt-get clean -y > /dev/null 2>&1
-apt-get update -y > /dev/null 2>&1
-#apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade & >/dev/null 2>&1
-#wait $!
-kill $cargando_pid
