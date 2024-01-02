@@ -25,7 +25,7 @@ Select an option and click OK" 100 100 100 "${@:4}")
 function dialog_yesno {
 	tput civis
 	while true; do
-		dialog --erase-on-exit --no-shadow --cursor-off-label --no-kill --no-cancel --yesno "$1" 0 0
+		dialog --erase-on-exit --no-shadow --cursor-off-label --no-kill --no-cancel --title "$2" --yesno "$1" 0 0
 		result=$?
 		if ! [ "$result" = "255" ]; then return $result; fi
 	done

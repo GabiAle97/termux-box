@@ -10,19 +10,14 @@ latest_commit=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/commi
 
 # Check if the latest commit SHA is different from the one you have
 if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
-  echo "There is a new commit!"
-  echo "Do you want to perform a FULL update of termux-box now? (Y/N)"
-  echo ""
-  read confirm
-  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
-  then 
-    rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
+  
+  dialog_yesno "Do you want to perform a FULL update of termux-box now?" "There is a new commit!"
+  if [ "$?" = "0" ]; then
+		rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
     cd ~/
     curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x install && ./install
     echo "$latest_commit" > latest_commit.txt
-  fi
-else
-  echo "No new commits."
+	fi
 fi
 
 if [ ! -f latest_release.txt ]
@@ -35,19 +30,21 @@ latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/rele
 
 # Check if the latest release tag is different from the one you have
 if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
-  echo "There is a new release!"
-  echo "It's STRONGLY recommended to update this, since it would come with some new functions and wine-custom versions,"
-  echo "but it isn't mandatory if you're happy with the actual performance."
-  echo "Continue updating? (Y/N)"
-  echo ""
-  read confirm
-  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
+  
+  dialog_yesno "It's STRONGLY recommended to update this, since it would come with some new functions and wine-custom versions, but it isn't mandatory if you're happy with the actual performance." "There is a new release!"
+  if [ "$?" = "0" ]
   then 
       cd $HOME/termux-box/ubuntu-fs/opt/
       for file in *.conf; do
         filename=$(basename "$file" .conf)
         mv "$file" "$filename.conf.backup"
       done
+      cd $HOME/termux-box/ubuntu-fs/opt/dynarec
+      for file in *.conf; do
+        filename=$(basename "$file" .conf)
+        mv "$file" "$filename.conf.backup"
+      done
+      cd $HOME/termux-box/ubuntu-fs/opt/
       wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz
       tar -xf scripts.tar.gz
       rm -rf scripts.tar.gz
@@ -55,12 +52,16 @@ if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
         filename=$(basename "$file" .conf.backup)
         mv "$file" "$filename.conf"
       done
+      cd $HOME/termux-box/ubuntu-fs/opt/dynarec
+      for file in *.conf; do
+        filename=$(basename "$file" .conf)
+        mv "$file" "$filename.conf.backup"
+      done
+      cd $HOME/termux-box/ubuntu-fs/opt/
       echo "$latest_release" > $HOME/termux-box/latest_release.txt
   fi
   cd ~
   touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
-else
-  echo "No new releases."
 fi
 
 if [ ! -f latest_patch.txt ]
@@ -73,25 +74,18 @@ latest_patch=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releas
 
 # Check if the latest release tag is different from the one you have
 if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
-  echo "There is a new patch!"
-  echo "It's STRONGLY recommended to update this, since it would come with some fixes and/or new turnip/dxvk/vkd3d/wined3d versions,"
-  echo "but it isn't mandatory if you're happy with the actual performance."
-  echo "Continue updating? (Y/N)"
-  echo ""
-  read confirm
-  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]
+  dialog_yesno "It's STRONGLY recommended to update this, since it would come with some fixes and/or new turnip/dxvk/vkd3d/wined3d versions, but it isn't mandatory if you're happy with the actual performance." "There is a new patch!"
+  if [ "$?" = "0" ]
   then 
       cd $HOME/termux-box/ubuntu-fs/opt
-      wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz
-      rm -rf d3d
-      rm -rf mesa
-      tar -xf patch.tar.xz
-      rm -rf patch.tar.xz
+      wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz &>/dev/null
+      rm -rf d3d &>/dev/null
+      rm -rf mesa &>/dev/null
+      tar -xf patch.tar.xz &>/dev/null
+      rm -rf patch.tar.xz &>/dev/null
       cd
       echo "$latest_patch" > $HOME/termux-box/latest_patch.txt
   fi
   cd ~
   touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
-else
-  echo "No new patch."
 fi
