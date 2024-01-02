@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkg install ncurses-utils -y &>/dev/null
+
 curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
 curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
 . $HOME/dialogs
@@ -28,18 +30,21 @@ mkdir -p /sdcard/termux-box
 
 dialog_loading "Updating termux packages" &
 cargando_pid=$!
-apt-get clean & >/dev/null 2>&1
-wait $!
-apt-get update & >/dev/null 2>&1
-wait $!
-apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade & >/dev/null 2>&1
-wait $!
+apt-get clean -y > /dev/null 2>&1
+apt-get update -y > /dev/null 2>&1
+apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade > /dev/null 2>&1
 kill $cargando_pid
 
 dialog_loading "Installing necessary packages" &
 cargando_pid=$!
-pkg install x11-repo pulseaudio xwayland proot wget tsu root-repo jq -y & &>/dev/null
-wait $!
+pkg install x11-repo -y &>/dev/null
+pkg install pulseaudio -y &>/dev/null
+pkg install xwayland -y &>/dev/null
+pkg install proot -y &>/dev/null
+pkg install wget -y &>/dev/null
+pkg install tsu -y &>/dev/null
+pkg install root-repo -y &>/dev/null
+pkg install jq -y &>/dev/null
 kill $cargando_pid
 
 rm -rf $HOME/termux-box
@@ -61,34 +66,30 @@ cd $HOME/termux-box
 dialog_menu "Termux-Box" "Download preconfigured Rootfs" \
 "1" "Default Jammy (stable, missing libs)" \
 "2" "Enhanced Mantic (Performance, useful for Wine-GE)" 
-while true; do
-    case $? in
-    1)
-        dialog_loading "Downloading Default Jammy" &
-        cargando_pid=$!
-        wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz & &>/dev/null
-        wait $!
-        kill $cargando_pid
-        ;;
-    2)
-        dialog_loading "Downloading Enhanced Mantic" &
-        cargando_pid=$!
-        wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz & &>/dev/null
-        wait $!
-        kill $cargando_pid
-        ;;
-    255)
-        break
-        ;;
-    esac
-done
+case $? in
+1)
+    dialog_loading "Downloading Default Jammy" &
+    cargando_pid=$!
+    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz &>/dev/null
+    export core=1
+    kill $cargando_pid
+    ;;
+2)
+    dialog_loading "Downloading Enhanced Mantic" &
+    cargando_pid=$!
+    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz &>/dev/null
+    export core=2
+    kill $cargando_pid
+    ;;
+255)
+    exit 0
+    ;;
+esac
 
 dialog_loading "Unzipping Rootfs" &
 cargando_pid=$!
-tar -xf rootfs.tar.xz & &>/dev/null
-wait $!
-rm -rf rootfs.tar.xz & &>/dev/null
-wait $!
+tar -xf rootfs.tar.xz &>/dev/null
+rm -rf rootfs.tar.xz &>/dev/null
 kill $cargando_pid
 
 cd $HOME/termux-box/ubuntu-fs/opt
@@ -98,26 +99,19 @@ then
 fi
 dialog_loading "Downloading & unziping scripts" &
 cargando_pid=$!
-wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz & &>/dev/null
-wait $!
-tar -xf scripts.tar.gz & &>/dev/null
-wait $!
-rm -rf scripts.tar.gz & &>/dev/null
-wait $!
+wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz &>/dev/null
+tar -xf scripts.tar.gz &>/dev/null
+rm -rf scripts.tar.gz &>/dev/null
 
 cd $HOME/termux-box/
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box & &>/dev/null
-wait $!
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box  &>/dev/null
 chmod +x termux-box
 mv termux-box $PREFIX/bin/
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh & &>/dev/null
-wait $!
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh & &>/dev/null
-wait $!
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh &>/dev/null
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh &>/dev/null
 chmod +x start-proot.sh
 chmod +x start-chroot.sh
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts & &>/dev/null
-wait $!
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts &>/dev/null
 chmod +x update-scripts
 
 kill $cargando_pid
@@ -125,16 +119,11 @@ kill $cargando_pid
 dialog_loading "Installing patches" &
 cargando_pid=$!
 cd $HOME/termux-box/ubuntu-fs/opt
-wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz & &>/dev/null
-wait $!
-rm -rf d3d & &>/dev/null
-rm -rf mesa & &>/dev/null
-wait $!
-wait $!
-tar -xf patch.tar.xz & &>/dev/null
-wait $!
-rm -rf patch.tar.xz & &>/dev/null
-wait $!
+wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz &>/dev/null
+rm -rf d3d &>/dev/null
+rm -rf mesa &>/dev/null
+tar -xf patch.tar.xz &>/dev/null
+rm -rf patch.tar.xz &>/dev/null
 
 curl -s "https://api.github.com/repos/GloriousEggroll/wine-ge-custom/releases" | jq -r '.[].name' | wc -l > countge
 curl -s "https://api.github.com/repos/Kron4ek/Wine-Builds/releases" | jq -r '.[].name' | wc -l > countkron
