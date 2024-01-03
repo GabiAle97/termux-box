@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export DIALOGRC=$HOME/dialog.rc
 dialog_flags="--colors --output-fd 1 --erase-on-exit --no-shadow --cursor-off-label --no-kill"
 
 function dialog_menu {
@@ -49,3 +50,5 @@ function dialog_loading {
         sleep 0.5
     done
 }
+ 
+dialog_message "Que tal" "Hola ja"
