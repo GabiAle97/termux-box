@@ -6,13 +6,6 @@ curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/s
 curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
 . $HOME/dialogs
 
-wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz &>/dev/null
-tar -xf termux-style.tar.xz
-
-. $HOME/termux-style/termux-style
-
-apply-termux-style
-
 cd
 
 dialog_loading "Asking for storage permission" &
@@ -53,6 +46,18 @@ pkg install tsu -y &>/dev/null
 pkg install root-repo -y &>/dev/null
 pkg install jq -y &>/dev/null
 kill $cargando_pid
+
+dialog_loading "Applying Termux Style" &
+cargando_pid=$!
+wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz &>/dev/null
+tar -xf termux-style.tar.xz
+
+. $HOME/termux-style/termux-style
+
+apply-termux-style
+
+kill $cargando_pid
+
 
 rm -rf $HOME/termux-box
 mkdir -p $HOME/termux-box
