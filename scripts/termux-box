@@ -2,9 +2,9 @@
 
 cd $HOME/termux-box
 
-. $HOME/termux-box/ubuntu-fs/opt/termux-style/termux-style
+. $HOME/termux-style/termux-style
 
-. $HOME/termux-box/ubuntu-fs/opt/dialogs
+. $HOME/dialogs
 
 apply-termux-style
 

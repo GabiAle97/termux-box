@@ -6,6 +6,13 @@ curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/s
 curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
 . $HOME/dialogs
 
+wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz &>/dev/null
+tar -xf termux-style.tar.xz
+
+. $HOME/termux-style/termux-style
+
+apply-termux-style
+
 cd
 
 dialog_loading "Asking for storage permission" &
@@ -70,14 +77,14 @@ case $? in
 1)
     dialog_loading "Downloading Default Jammy" &
     cargando_pid=$!
-    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz &>/dev/null
+    wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz &>/dev/null
     export core=1
     kill $cargando_pid
     ;;
 2)
     dialog_loading "Downloading Enhanced Mantic" &
     cargando_pid=$!
-    wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz &>/dev/null
+    wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz -O rootfs.tar.xz &>/dev/null
     export core=2
     kill $cargando_pid
     ;;
@@ -119,7 +126,7 @@ kill $cargando_pid
 dialog_loading "Installing patches" &
 cargando_pid=$!
 cd $HOME/termux-box/ubuntu-fs/opt
-wget -q --show-progress https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz &>/dev/null
+wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz &>/dev/null
 rm -rf d3d &>/dev/null
 rm -rf mesa &>/dev/null
 tar -xf patch.tar.xz &>/dev/null
