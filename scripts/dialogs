@@ -50,5 +50,3 @@ function dialog_loading {
         sleep 0.5
     done
 }
- 
-dialog_message "Que tal" "Hola ja"
