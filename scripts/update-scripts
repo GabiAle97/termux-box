@@ -53,9 +53,9 @@ if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
         mv "$file" "$filename.conf"
       done
       cd $HOME/termux-box/ubuntu-fs/opt/dynarec
-      for file in *.conf; do
-        filename=$(basename "$file" .conf)
-        mv "$file" "$filename.conf.backup"
+      for file in *.conf.backup; do
+        filename=$(basename "$file" .conf.backup)
+        mv "$file" "$filename.conf"
       done
       cd $HOME/termux-box/ubuntu-fs/opt/
       echo "$latest_release" > $HOME/termux-box/latest_release.txt
