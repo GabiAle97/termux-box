@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y &>/dev/null
+if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y; fi &>/dev/null
 
-if [ ! -f dialogs]; then
+if [ ! -f dialogs ]; then
     curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
     curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
 fi
@@ -11,21 +11,21 @@ fi
 cd
 
 dialog_loading "Asking for storage permission" &
-cargando_pid=$!
 termux-setup-storage &>/dev/null
 
 if [ ! -e storage ]; then
-    kill $cargando_pid
+    export break_dialog=1
     dialog_loading "Storage permission has not been granted.\nWaiting for manually allowing" &
-    cargando_pid=$!
 fi
 while true; do
     if [ -e storage ]; then
         rm -rf /sdcard/termux-box
-        kill $cargando_pid
+        export break_dialog=1
         break
     fi
 done
+
+unset break_dialog
 
 mkdir -p /sdcard/termux-box
 
@@ -57,8 +57,6 @@ rm -rf $HOME/termux-box
 mkdir -p $HOME/termux-box
 cd $HOME/termux-box
 
-dialog_loading "Obtaining & installing Termux-X11 server" &
-cargando_pid=$!
 dialog_progressbar_wget "Termux-box MOD" "Obtaining & installing Termux-X11 server" "https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb" "termux-x11-1.02.07-0-all.deb"
 
 dialog_progressbar_dpkg "termux-x11-1.02.07-0-all.deb"

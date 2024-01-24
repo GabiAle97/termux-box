@@ -41,14 +41,14 @@ function dialog_message {
 
 
 function dialog_loading {
-    dialog --prgbox "while true; do \
+    dialog --prgbox "while '$break_dialog' = ''; do \
 echo ''; echo ''; echo '$1.';echo ''; echo ''; \
 sleep 1; \
 echo ''; echo ''; echo '$1..'; echo ''; echo ''; \
 sleep 1; \
 echo ''; echo ''; echo '$1...'; echo ''; echo ''; \
 sleep 1; \
-done" 0 0
+done" 100 100
 }
 
 function dialog_progressbar_wget {
@@ -66,10 +66,10 @@ function dialog_package_install {
     local timer=0
     while ! dpkg -l | grep -q -w "$3" 2>/dev/null; do
         echo $timer
-        sleep 1
-        export timer=$(expr $timer + 6)
+        sleep 2
+        export timer=$(expr $timer + 3)
 		if dpkg -l | grep -q -w "$3"; then echo "100"; fi
-    done | dialog --title "$1" --gauge "$2..." 10 70 0
+    done | dialog --title "$1" --gauge "$2..." 0 0 0
 }
 
 function dialog_progressbar_tar {
@@ -78,7 +78,7 @@ function dialog_progressbar_tar {
 
 function dialog_progressbar_dpkg {
     {
-		sudo dpkg -i google-chrome-stable_current_amd64.deb &
+		dpkg -i google-chrome-stable_current_amd64.deb &
         dpkg_pid=$!
 		counter=0
         while ps -p $dpkg_pid > /dev/null; do
