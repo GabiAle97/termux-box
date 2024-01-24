@@ -11,10 +11,11 @@ fi
 cd
 
 dialog_loading "Asking for storage permission" &
-termux-setup-storage &>/dev/null
 
 if [ ! -e storage ]; then
+    termux-setup-storage & &>/dev/null
     export break_dialog=1
+    unset break_dialog
     dialog_loading "Storage permission has not been granted.\nWaiting for manually allowing" &
 fi
 while true; do
