@@ -41,14 +41,15 @@ function dialog_message {
 
 
 function dialog_loading {
-    dialog --prgbox "while '$break_dialog' = ''; do \
+	dialog_width=$(echo -n "$1" | wc -c)
+    dialog --prgbox "while [ '$break_dialog' = '' ]; do \
 echo ''; echo ''; echo '$1.';echo ''; echo ''; \
 sleep 1; \
 echo ''; echo ''; echo '$1..'; echo ''; echo ''; \
 sleep 1; \
 echo ''; echo ''; echo '$1...'; echo ''; echo ''; \
 sleep 1; \
-done" 100 100
+done" 0 $(expr $dialog_width + 8)
 }
 
 function dialog_progressbar_wget {
