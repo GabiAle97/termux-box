@@ -41,12 +41,33 @@ function dialog_message {
 
 
 function dialog_loading {
-    while :; do
-        (dialog --infobox "$1." 0 0; sleep 0.5) &
-        sleep 0.5
-        (dialog --infobox "$1.." 0 0; sleep 0.5) &
-		sleep 0.5
-        (dialog --infobox "$1..." 0 0; sleep 0.5) &
-        sleep 0.5
-    done
+    dialog --prgbox "while true; do \
+echo ""; echo ""; echo \"$1.\";echo ""; echo ""; \
+sleep 1; \
+echo ""; echo ""; echo \"$1..\"; echo ""; echo ""; \
+sleep 1; \
+echo ""; echo ""; echo \"$1...\"; echo ""; echo ""; \
+sleep 1; \
+done" 0 0
+}
+
+function dialog_progressbar_wget {
+	file_url="$3"
+	output_file="$4"
+
+	wget "$file_url" -O "$output_file" 2>&1 | \
+    grep "%" | \
+    awk '{print $7}' | \
+	awk -F "%" '{print $1}' | \
+	dialog --title "$1" --gauge "$2" 10 60 0
+}
+
+function dialog_package_install {
+    local timer=0
+    while ! dpkg -l | grep -q -w "$1" 2>/dev/null; do
+        echo $timer
+        sleep 1
+        export timer=$(expr $timer + 12)
+		if dpkg -l | grep -q -w "$1"; then echo "100"; fi
+    done | dialog --title "$1" --gauge "$2..." 10 70 0
 }

@@ -15,34 +15,13 @@ if [ ! -e ubuntu-fs/opt/wine ]; then
     "3" "8.0 proton experimental"
     case $? in
     1)
-        dialog_loading "Downloading Wine 8.19 staging" &
-        loading_process=$!
-        wget -q --show-progress https://github.com/Kron4ek/Wine-Builds/releases/download/8.19/wine-8.19-staging-amd64.tar.xz -O ubuntu-fs/opt/wine.tar.xz &>/dev/null
-        if [ ! -f ubuntu-fs/opt/wine.tar.xz ]; then
-            echo "Download failed, restart termux-box"
-            exit
-        fi
-        kill $loading_process
+        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.0 staging" "https://github.com/Kron4ek/Wine-Builds/releases/download/9.0/wine-9.0-staging-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         ;;
     2)
-        dialog_loading "Downloading Wine 8.22 ge-custom" &
-        loading_process=$!
-        wget -q --show-progress https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-22/wine-lutris-GE-Proton8-22-x86_64.tar.xz -O ubuntu-fs/opt/wine.tar.xz &>/dev/null
-        if [ ! -f ubuntu-fs/opt/wine.tar.xz ]; then
-            echo "Download failed, restart termux-box"
-            exit
-        fi
-        kill $loading_process
+        dialog_progressbar_wget "Install Custom Wine" "Downloading WineGE 8.25" "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-25/wine-lutris-GE-Proton8-25-x86_64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         ;;
     3)
-        dialog_loading "Downloading Wine 8.0 proton experimental" &
-        loading_process=$!
-        wget -q --show-progress https://github.com/Kron4ek/Wine-Builds/releases/download/proton-exp-8.0/wine-proton-exp-8.0-amd64.tar.xz -O ubuntu-fs/opt/wine.tar.xz &>/dev/null
-        if [ ! -f ubuntu-fs/opt/wine.tar.xz ]; then
-            echo "Download failed, restart termux-box"
-            exit
-        fi
-        kill $loading_process
+        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine Proton 8.0-5" "https://github.com/Kron4ek/Wine-Builds/releases/download/proton-8.0-5/wine-proton-8.0-5-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         touch ubuntu-fs/opt/patch-re8
         ;;
     esac
