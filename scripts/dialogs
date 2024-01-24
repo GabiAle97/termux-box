@@ -64,10 +64,28 @@ function dialog_progressbar_wget {
 
 function dialog_package_install {
     local timer=0
-    while ! dpkg -l | grep -q -w "$1" 2>/dev/null; do
+    while ! dpkg -l | grep -q -w "$3" 2>/dev/null; do
         echo $timer
         sleep 1
-        export timer=$(expr $timer + 12)
-		if dpkg -l | grep -q -w "$1"; then echo "100"; fi
+        export timer=$(expr $timer + 6)
+		if dpkg -l | grep -q -w "$3"; then echo "100"; fi
     done | dialog --title "$1" --gauge "$2..." 10 70 0
+}
+
+function dialog_progressbar_tar {
+	(pv -n $1 | tar x${2}f - ) 2>&1 | dialog --title "Termux-box MOD" --gauge "Extracting $1..." 6 50
+}
+
+function dialog_progressbar_dpkg {
+    {
+		sudo dpkg -i google-chrome-stable_current_amd64.deb &
+        dpkg_pid=$!
+		counter=0
+        while ps -p $dpkg_pid > /dev/null; do
+			echo "$counter"
+			counter=$(expr $counter + 8)
+			sleep 1
+            if ! ps -p $dpkg_pid > /dev/null; then echo "100"; fi
+        done
+    } | dialog --title "Termux-box MOD" --gauge "Installing $1..." 0 0
 }
