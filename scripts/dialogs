@@ -42,11 +42,11 @@ function dialog_message {
 
 function dialog_loading {
     dialog --prgbox "while true; do \
-echo \"\"; echo \"\"; echo \"$1.\";echo \"\"; echo \"\"; \
+echo ''; echo ''; echo '$1.';echo ''; echo ''; \
 sleep 1; \
-echo \"\"; echo \"\"; echo \"$1..\"; echo \"\"; echo \"\"; \
+echo ''; echo ''; echo '$1..'; echo ''; echo ''; \
 sleep 1; \
-echo \"\"; echo \"\"; echo \"$1...\"; echo \"\"; echo \"\"; \
+echo ''; echo ''; echo '$1...'; echo ''; echo ''; \
 sleep 1; \
 done" 0 0
 }
