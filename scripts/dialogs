@@ -44,7 +44,7 @@ function dialog_loading {
 	export dialog_string=$1
 	export dialog_height=$(echo "$1" | grep -o "\n" | wc -l)
 	export dialog_width=$(echo "$1" | wc -m)
-    dialog --prgbox "./loop_first" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
+    dialog --prgbox "./loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
 }
 
 function kill_current_dialog {

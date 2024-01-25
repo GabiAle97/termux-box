@@ -14,7 +14,7 @@ dialog_loading "Asking for storage permission" &
 if [ ! -e storage ]; then
     termux-setup-storage & &>/dev/null
     kill_current_dialog
-    dialog_loading "Storage permission has not been granted.\nWaiting for manually allowing" &
+    dialog_loading "Storage permission has not been granted. Waiting for manually allowing" &
 fi
 while true; do
     if [ -e storage ]; then
