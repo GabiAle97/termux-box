@@ -10,26 +10,19 @@ fi
 
 cd
 dialog_loading "Asking for storage permission" &
-dialog_pid=$!
 
 if [ ! -e storage ]; then
     termux-setup-storage & &>/dev/null
-    export break_dialog=1
-    unset break_dialog
-    kill $dialog_pid
+    kill_current_dialog
     dialog_loading "Storage permission has not been granted.\nWaiting for manually allowing" &
-    dialog_pid=$!
 fi
 while true; do
     if [ -e storage ]; then
         rm -rf /sdcard/termux-box
-        export break_dialog=1
         break
     fi
 done
-
-unset break_dialog
-kill $dialog_pid
+kill_current_dialog
 
 mkdir -p /sdcard/termux-box
 dialog_package_install "Termux-box MOD" "Updating termux packages" "pv" &

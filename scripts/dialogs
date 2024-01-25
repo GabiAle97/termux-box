@@ -41,15 +41,17 @@ function dialog_message {
 
 
 function dialog_loading {
-	dialog_width=$(echo -n "$1" | wc -c)
-    dialog --prgbox "while [ '$break_dialog' = '' ]; do \
-echo ''; echo ''; echo '$1.';echo ''; echo ''; \
-sleep 1; \
-echo ''; echo ''; echo '$1..'; echo ''; echo ''; \
-sleep 1; \
-echo ''; echo ''; echo '$1...'; echo ''; echo ''; \
-sleep 1; \
-done" 0 $(expr $dialog_width + 8)
+	export dialog_string=$1
+	export dialog_height=$(echo "$1" | grep -o "\n" | wc -l)
+	export dialog_width=$(echo "$1" | wc -m)
+    dialog --prgbox "./loop_first" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
+}
+
+function kill_current_dialog {
+	dialog_pid=$(ps a | grep -m 1 "dialog --prgbox ./loop" | awk -F " " '{print $1}')
+	kill $dialog_pid &>/dev/null
+	stty sane
+	clear
 }
 
 function dialog_progressbar_wget {

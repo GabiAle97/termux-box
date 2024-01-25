@@ -10,9 +10,9 @@ apply-termux-style
 
 if [ ! -e ubuntu-fs/opt/wine ]; then
     dialog_menu "Termux-Box" "Select which Wine to download: " \
-    "1" "8.19 staging" \
-    "2" "8.22 ge-custom" \
-    "3" "8.0 proton experimental"
+    "1" "9.0 staging" \
+    "2" "8.25 ge-custom" \
+    "3" "8.0-5 proton"
     case $? in
     1)
         dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.0 staging" "https://github.com/Kron4ek/Wine-Builds/releases/download/9.0/wine-9.0-staging-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Reemplazar "\n" por espacios
+formatted_dialog_string=$(echo -e "$dialog_string" | tr '\n' ' ')
+
+# Convertir en array
+IFS=' ' read -r -a array <<< "$formatted_dialog_string"
+
+./loop "${array[@]}"
