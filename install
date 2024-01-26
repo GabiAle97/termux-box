@@ -13,9 +13,10 @@ fi
 cd
 dialog_loading "Asking for storage permission" &
 
+termux-setup-storage & &>/dev/null
+sleep 2
+
 if [ ! -e storage ]; then
-    termux-setup-storage & &>/dev/null
-    sleep 2
     kill_current_dialog
     dialog_loading "Storage permission has not been granted." "Waiting for manually allowing" &
 fi
@@ -23,10 +24,9 @@ while true; do
     if [ -e storage ]; then
         rm -rf /sdcard/termux-box
         break
-    else
-        termux-setup-storage & &>/dev/null
     fi
 done
+sleep 2
 kill_current_dialog
 
 mkdir -p /sdcard/termux-box
