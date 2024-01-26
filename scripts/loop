@@ -5,7 +5,7 @@ counter_anim=1
 while true; do
     loading_animation=""
     counter_string=1
-    for (( i=0; i<${#dialog_string}; i++ )); do
+    for (( i=0; i<${#dialog_string_FL}; i++ )); do
         if [ $counter_string = $(expr  $dialog_width / 2) ]; then
             if [ $counter_anim = 1 ]; then
                 loading_animation+="-"
@@ -24,7 +24,9 @@ while true; do
         counter_string=$(expr $counter_string + 1)
     done
     counter_string=1
-    echo -e "$dialog_string"
+    echo "$dialog_string_FL"
+    echo "$dialog_string_SL"
+    echo ""
     echo "$loading_animation"
     loading_animation=""
     sleep 1

@@ -5,6 +5,8 @@ if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y; fi
 if [ ! -f dialogs ]; then
     curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
     curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
+    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
+    chmod +x loop
 fi
 . $HOME/dialogs
 
@@ -13,13 +15,16 @@ dialog_loading "Asking for storage permission" &
 
 if [ ! -e storage ]; then
     termux-setup-storage & &>/dev/null
+    sleep 2
     kill_current_dialog
-    dialog_loading "Storage permission has not been granted. Waiting for manually allowing" &
+    dialog_loading "Storage permission has not been granted." "Waiting for manually allowing" &
 fi
 while true; do
     if [ -e storage ]; then
         rm -rf /sdcard/termux-box
         break
+    else
+        termux-setup-storage & &>/dev/null
     fi
 done
 kill_current_dialog
