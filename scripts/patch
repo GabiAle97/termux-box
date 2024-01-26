@@ -2,13 +2,13 @@
 
 cd $HOME/termux-box/ubuntu-fs/opt
 
-wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>>storage/downloads/TBM-Installer-log.txt
+wget https://github.com/GabiAle97/termux-box/raw/main/scripts/scripts.tar.gz &>>/sdcard/termux-box/Installer.log
 mkdir tempscripts
 tar -xf scripts.tar.gz -C tempscripts
 rm -rf scripts.tar.gz
 
 cd tempscripts
-cp -n *.conf .. &>>storage/downloads/TBM-Installer-log.txt
+cp -n *.conf .. &>>/sdcard/termux-box/Installer.log
 cp Env.conf /sdcard/termux-box
 cp Env.conf ..
 cp vkd3d.conf /sdcard/termux-box
@@ -20,11 +20,11 @@ rm -rf tempscripts
 
 cd $HOME/termux-box/
 
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box &>>storage/downloads/TBM-Installer-log.txt
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box &>>/sdcard/termux-box/Installer.log
 chmod +x termux-box
 mv termux-box $PREFIX/bin/
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh &>>storage/downloads/TBM-Installer-log.txt
-wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh &>>storage/downloads/TBM-Installer-log.txt
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh &>>/sdcard/termux-box/Installer.log
+wget -N https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh &>>/sdcard/termux-box/Installer.log
 chmod +x start-proot.sh
 chmod +x start-chroot.sh
 

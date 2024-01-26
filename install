@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y; fi &>>storage/downloads/TBM-Installer-log.txt
+if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y; fi &>/dev/null
 
 if [ ! -f dialogs ]; then
-    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>>storage/downloads/TBM-Installer-log.txt
-    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>>storage/downloads/TBM-Installer-log.txt
-    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>>storage/downloads/TBM-Installer-log.txt
+    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
+    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
+    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
     chmod +x loop
 fi
 . $HOME/dialogs
@@ -13,7 +13,7 @@ fi
 cd
 dialog_loading "Asking for storage permission" &
 
-termux-setup-storage & &>>storage/downloads/TBM-Installer-log.txt
+termux-setup-storage & &>/dev/null
 sleep 5
 
 if [ ! -e storage ]; then
@@ -30,20 +30,21 @@ sleep 5
 kill_current_dialog
 
 mkdir -p /sdcard/termux-box
+touch /sdcard/termux-box/Installer.log
 dialog_package_install "Termux-box MOD" "Updating termux packages" "pv" &
 apt-get clean -y > /dev/null 2>&1
 apt-get update -y > /dev/null 2>&1
 apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade > /dev/null 2>&1
-pkg install pv -y &>>storage/downloads/TBM-Installer-log.txt
+pkg install pv -y &>>/sdcard/termux-box/Installer.log
 dialog_package_install "Termux-box MOD" "Installing necessary packages" "jq" &
-pkg install x11-repo -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install pulseaudio -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install xwayland -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install proot -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install wget -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install tsu -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install root-repo -y &>>storage/downloads/TBM-Installer-log.txt
-pkg install jq -y &>>storage/downloads/TBM-Installer-log.txt
+pkg install x11-repo -y &>>/sdcard/termux-box/Installer.log
+pkg install pulseaudio -y &>>/sdcard/termux-box/Installer.log
+pkg install xwayland -y &>>/sdcard/termux-box/Installer.log
+pkg install proot -y &>>/sdcard/termux-box/Installer.log
+pkg install wget -y &>>/sdcard/termux-box/Installer.log
+pkg install tsu -y &>>/sdcard/termux-box/Installer.log
+pkg install root-repo -y &>>/sdcard/termux-box/Installer.log
+pkg install jq -y &>>/sdcard/termux-box/Installer.log
 dialog_progressbar_wget "Termux-box MOD" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
 dialog_progressbar_tar "termux-style.tar.xz" "J"
 
@@ -57,7 +58,7 @@ mkdir -p $HOME/termux-box
 cd $HOME/termux-box
 dialog_progressbar_wget "Termux-box MOD" "Obtaining & installing Termux-X11 server" "https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb" "termux-x11-1.02.07-0-all.deb"
 dialog_progressbar_dpkg "termux-x11-1.02.07-0-all.deb"
-rm -rf termux-x11-1.02.07-0-all.deb &>>storage/downloads/TBM-Installer-log.txt
+rm -rf termux-x11-1.02.07-0-all.deb &>>/sdcard/termux-box/Installer.log
 
 
 cd $HOME/termux-bo
@@ -79,7 +80,7 @@ case $? in
 esac
 
 dialog_progressbar_tar "rootfs.tar.xz" "J"
-rm -rf rootfs.tar.xz &>>storage/downloads/TBM-Installer-log.txt
+rm -rf rootfs.tar.xz &>>/sdcard/termux-box/Installer.log
 
 cd $HOME/termux-box/ubuntu-fs/opt
 if [ $core = 2 ]
@@ -88,7 +89,7 @@ then
 fi
 dialog_progressbar_wget "Termux-box MOD" "Downloading scripts.tar.gz" "https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz" "scripts.tar.gz"
 dialog_progressbar_tar "scripts.tar.gz" "z"
-rm -rf scripts.tar.gz &>>storage/downloads/TBM-Installer-log.txt
+rm -rf scripts.tar.gz &>>/sdcard/termux-box/Installer.log
 
 cd $HOME/termux-box
 dialog_progressbar_wget "Termux-box MOD" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box" "termux-box"
@@ -104,10 +105,10 @@ chmod +x update-scripts
 
 cd $HOME/termux-box/ubuntu-fs/op
 dialog_progressbar_wget "Termux-box MOD" "Downloading patch.tar.xz" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz" "patch.tar.xz"
-rm -rf d3d &>>storage/downloads/TBM-Installer-log.txt
+rm -rf d3d &>>/sdcard/termux-box/Installer.log
 rm -rf mesa &>/dev/nul
 dialog_progressbar_tar "patch.tar.xz" "J"
-rm -rf patch.tar.xz &>>storage/downloads/TBM-Installer-log.txt
+rm -rf patch.tar.xz &>>/sdcard/termux-box/Installer.log
 
 curl -s "https://api.github.com/repos/GloriousEggroll/wine-ge-custom/releases" | jq -r '.[].name' | wc -l > countge
 curl -s "https://api.github.com/repos/Kron4ek/Wine-Builds/releases" | jq -r '.[].name' | wc -l > countkron

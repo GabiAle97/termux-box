@@ -58,7 +58,7 @@ function dialog_loading {
 
 function kill_current_dialog {
 	dialog_pid=$(ps a | grep -m 1 "dialog --prgbox ./loop" | awk -F " " '{print $1}')
-	kill $dialog_pid &>>storage/downloads/TBM-Installer-log.txt
+	kill $dialog_pid &>>/sdcard/termux-box/Installer.log
 	stty sane
 }
 

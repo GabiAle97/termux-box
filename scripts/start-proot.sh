@@ -3,7 +3,7 @@
 if [ -f ubuntu-fs/opt/virgl ]; then
     pkill virgl
     rm $PREFIX/tmp/.virgl_test >/dev/null 2>&1
-    TMPDIR=$PREFIX/tmp ubuntu-fs/opt/libvirgl_test_server.so &>>storage/downloads/TBM-Installer-log.txt &
+    TMPDIR=$PREFIX/tmp ubuntu-fs/opt/libvirgl_test_server.so &>>/sdcard/termux-box/Installer.log &
     while [ ! -e $PREFIX/tmp/.virgl_test ]; do
         sleep 0.2
     done

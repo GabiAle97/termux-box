@@ -11,7 +11,7 @@ folder=/data/data/com.termux/files/home/termux-box/ubuntu-fs
 if [ -f $folder/opt/virgl ]; then
     pkill virgl
     rm $PREFIX/tmp/.virgl_test >/dev/null 2>&1
-    TMPDIR=$PREFIX/tmp $folder/opt/libvirgl_test_server.so &>>storage/downloads/TBM-Installer-log.txt &
+    TMPDIR=$PREFIX/tmp $folder/opt/libvirgl_test_server.so &>>/sdcard/termux-box/Installer.log &
     while [ ! -e $PREFIX/tmp/.virgl_test ]; do
         sleep 0.2
     done
@@ -38,7 +38,7 @@ sudo umount $folder/proc
 sudo umount $folder/tmp
 sudo umount $folder/sdcard
 sudo umount $folder/termux
-sudo umount $folder/external &>>storage/downloads/TBM-Installer-log.txt
+sudo umount $folder/external &>>/sdcard/termux-box/Installer.log
 sudo umount $folder/sys
 if [ -f $folder/opt/virgl ]; then
 pkill virgl

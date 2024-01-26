@@ -37,9 +37,9 @@ fi
 
 cd $HOME/termux-box
 touch ubuntu-fs/root/.hushlogin
-mkdir -p /sdcard/Android/data/com.termux/files/Download &>>storage/downloads/TBM-Installer-log.txt
-mkdir -p ubuntu-fs/external &>>storage/downloads/TBM-Installer-log.txt
-termux-x11 :1 &>>storage/downloads/TBM-Installer-log.txt &
+mkdir -p /sdcard/Android/data/com.termux/files/Download &>>/sdcard/termux-box/Installer.log
+mkdir -p ubuntu-fs/external &>>/sdcard/termux-box/Installer.log
+termux-x11 :1 &>>/sdcard/termux-box/Installer.log &
 rm -rf $PREFIX/tmp/pulse-*
 pulseaudio -k >/dev/null 2>&1
 pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1
