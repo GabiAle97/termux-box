@@ -53,7 +53,7 @@ function dialog_loading {
 	else
 		export dialog_width=$dialog_width_SL
 	fi
-    dialog --prgbox "./loop" $(expr 3 + $(expr $dialog_width_FL_height + $dialog_width_SL_height)) $(expr 4 + $dialog_width)
+    dialog --prgbox "./loop" $(expr 4 + $(expr $dialog_width_FL_height + $dialog_width_SL_height)) $(expr 4 + $dialog_width)
 }
 
 function kill_current_dialog {
