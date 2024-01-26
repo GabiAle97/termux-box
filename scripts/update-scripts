@@ -78,11 +78,11 @@ if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
   if [ "$?" = "0" ]
   then 
       cd $HOME/termux-box/ubuntu-fs/opt
-      wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz &>/dev/null
-      rm -rf d3d &>/dev/null
-      rm -rf mesa &>/dev/null
-      tar -xf patch.tar.xz &>/dev/null
-      rm -rf patch.tar.xz &>/dev/null
+      wget -q https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz &>>storage/downloads/TBM-Installer-log.txt
+      rm -rf d3d &>>storage/downloads/TBM-Installer-log.txt
+      rm -rf mesa &>>storage/downloads/TBM-Installer-log.txt
+      tar -xf patch.tar.xz &>>storage/downloads/TBM-Installer-log.txt
+      rm -rf patch.tar.xz &>>storage/downloads/TBM-Installer-log.txt
       cd
       echo "$latest_patch" > $HOME/termux-box/latest_patch.txt
   fi
