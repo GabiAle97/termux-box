@@ -43,17 +43,19 @@ function dialog_message {
 function dialog_loading {
 	export dialog_string_FL=$1
 	export dialog_string_SL=$2
-	export dialog_height=$(echo "$1" | grep -o "\n" | wc -l)
 	export dialog_width_FL=$(echo "$1" | wc -m)
 	export dialog_width_SL=$(echo "$2" | wc -m)
-	export dialog_width_FL_height=$(echo "$1" | wc -l)
-	export dialog_width_SL_height=$(echo "$2" | wc -l)
-	if [ $dialog_width_FL -gt $dialog_width_SL ]; then
-		export dialog_width=$dialog_width_FL
-	else
+	if [ ! "$dialog_width_SL" = '' ] && [ $dialog_width_SL -gt $dialog_width_FL ]; then
 		export dialog_width=$dialog_width_SL
+	else
+		export dialog_width=$dialog_width_FL
 	fi
-    dialog --prgbox "./loop" $(expr 4 + $(expr $dialog_width_FL_height + $dialog_width_SL_height)) $(expr 4 + $dialog_width)
+	if [ ! "$dialog_width_SL" = '' ]; then
+		export dialog_height=2
+	else
+		export dialog_height=1
+	fi
+    dialog --prgbox "./loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
 }
 
 function kill_current_dialog {
