@@ -79,7 +79,7 @@ function dialog_package_install {
     local timer=0
     while ! dpkg -l | grep -q -w "$3" 2>/dev/null; do
         echo $timer
-        sleep 2
+        sleep 4
         export timer=$(expr $timer + 3)
 		if dpkg -l | grep -q -w "$3"; then echo "100"; fi
     done | dialog --title "$1" --gauge "$2..." 0 0 0
