@@ -32,6 +32,7 @@ apt-get clean -y > /dev/null 2>&1
 apt-get update -y > /dev/null 2>&1
 apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade > /dev/null 2>&1
 pkg install pv -y &>>/sdcard/termux-box/Installer.log
+while [ $(ps a | grep "dialog" | wc -l) -gt 2 ] ; do sleep 0.5; done
 dialog_package_install "Termux-box MOD" "Installing necessary packages" "jq" &
 pkg install x11-repo -y &>>/sdcard/termux-box/Installer.log
 pkg install pulseaudio -y &>>/sdcard/termux-box/Installer.log
