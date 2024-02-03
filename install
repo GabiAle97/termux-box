@@ -53,9 +53,27 @@ apply-termux-style
 rm -rf $HOME/termux-box
 mkdir -p $HOME/termux-box
 cd $HOME/termux-box
-dialog_progressbar_wget "Termux-box MOD" "Obtaining & installing Termux-X11 server" "https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb" "termux-x11-1.02.07-0-all.deb"
-dialog_progressbar_dpkg "termux-x11-1.02.07-0-all.deb"
-rm -rf termux-x11-1.02.07-0-all.deb &>>/sdcard/termux-box/Installer.log
+
+dialog_menu "Termux-Box" "Install Termux-x11" \
+"1" "Default Termux-x11 (Tested and stable for Android 13 and below)" \
+"2" "Termux-x11-nightly (For Android 14)" 
+case $? in
+1)
+    dialog_loading "Installing Termux-x11 default" &
+    wget "https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb" -O "termux-x11-1.02.07-0-all.deb" &>>/sdcard/termux-box/Installer.log
+    dpkg -i "termux-x11-1.02.07-0-all.deb" &>>/sdcard/termux-box/Installer.log
+    rm -rf termux-x11-1.02.07-0-all.deb &>>/sdcard/termux-box/Installer.log
+    ;;
+2)
+    dialog_loading "Installing Termux-x11-nightly" &
+    pkg install termux-x11-nightly -y &>>/sdcard/termux-box/Installer.log
+    ;;
+255)
+    exit 0
+    ;;
+esac
+
+kill_current_dialog
 
 
 cd $HOME/termux-box

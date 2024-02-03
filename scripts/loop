@@ -2,7 +2,7 @@
 
 counter=1
 counter_anim=1
-while true; do
+while [ $kill_dialog = 0 ]; do
     loading_animation=""
     counter_string=1
     for (( i=0; i<${#dialog_string_FL}; i++ )); do

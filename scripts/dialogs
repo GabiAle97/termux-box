@@ -41,6 +41,7 @@ function dialog_message {
 
 
 function dialog_loading {
+	export kill_dialog=0
 	export dialog_string_FL=$1
 	export dialog_string_SL=$2
 	export dialog_width_FL=$(echo "$1" | wc -m)
@@ -55,12 +56,14 @@ function dialog_loading {
 	else
 		export dialog_height=1
 	fi
-    dialog --prgbox "./loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
+    dialog $dialog_flags --prgbox "/opt/loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
 }
 
 function kill_current_dialog {
+	export kill_dialog=1
+	sleep 1
 	dialog_pid=$(ps a | grep "dialog.*prgbox" | awk -F " " '{print $1}')
-	kill -9 $dialog_pid
+	kill $dialog_pid &>/dev/null
 	stty sane
 }
 
