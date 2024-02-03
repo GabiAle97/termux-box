@@ -56,7 +56,7 @@ function dialog_loading {
 	else
 		export dialog_height=1
 	fi
-    dialog $dialog_flags --prgbox "/opt/loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
+    dialog $dialog_flags --prgbox "./loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
 }
 
 function kill_current_dialog {
