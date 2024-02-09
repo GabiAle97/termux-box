@@ -56,7 +56,7 @@ function dialog_loading {
 	else
 		export dialog_height=1
 	fi
-    dialog $dialog_flags --prgbox "$HOME/loop" $(expr 4 + $dialog_height) $(expr 4 + $dialog_width)
+    dialog $dialog_flags --prgbox "$HOME/loop" $((4 + $dialog_height)) $((4 + $dialog_width))
 }
 
 function kill_current_dialog {
@@ -83,7 +83,7 @@ function dialog_package_install {
     while ! dpkg -l | grep -q -w "$3" 2>/dev/null; do
         echo $timer
         sleep 4
-        export timer=$(expr $timer + 3)
+        export timer=$(($timer + 3))
 		if dpkg -l | grep -q -w "$3"; then echo "100"; fi
     done | dialog --title "$1" --gauge "$2..." 0 0 0
 }
@@ -99,7 +99,7 @@ function dialog_progressbar_dpkg {
 		counter=0
         while ps -p $dpkg_pid > /dev/null; do
 			echo "$counter"
-			counter=$(expr $counter + 8)
+			counter=$(($counter + 8))
 			sleep 1
             if ! ps -p $dpkg_pid > /dev/null; then echo "100"; fi
         done
