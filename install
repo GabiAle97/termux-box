@@ -9,7 +9,7 @@ if [ ! -f dialogs ]; then
     chmod +x loop
 fi
 
-if [ -e $HOME/dialogs ] && ! dpkg -l | grep -q -w "ncurses-utils"; then
+if [ -e $HOME/dialogs ] && dpkg -l | grep -q -w "ncurses-utils"; then
     . $HOME/dialogs
 else
     echo ""
