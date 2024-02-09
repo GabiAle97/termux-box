@@ -8,8 +8,15 @@ if [ ! -f dialogs ]; then
     curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
     chmod +x loop
 fi
-. $HOME/dialogs
 
+if [ -e $HOME/dialogs ] && ! dpkg -l | grep -q -w "ncurses-utils"; then
+    . $HOME/dialogs
+else
+    echo ""
+    echo "Something went wrong with termux repositories. You may have to clean termux data and reinstall termux-box mod"
+    echo ""
+    exit 0
+fi
 cd
 
 
