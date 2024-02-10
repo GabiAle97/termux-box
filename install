@@ -1,5 +1,7 @@
 #!/bin/bash
 
+apt-get clean -y > /dev/null 2>&1
+
 if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y; fi &>/dev/null
 
 if [ ! -f dialogs ]; then
@@ -34,13 +36,12 @@ done
 
 mkdir -p /sdcard/termux-box
 touch /sdcard/termux-box/Installer.log
-dialog_package_install "Termux-box MOD" "Updating termux packages" "pv" &
+dialog_loading "Updating termux packages" &
 apt-get clean -y > /dev/null 2>&1
 apt-get update -y > /dev/null 2>&1
 apt-get -y --with-new-pkgs -o Dpkg::Options::="--force-confdef" upgrade > /dev/null 2>&1
-pkg install pv -y &>>/sdcard/termux-box/Installer.log
-while [ $(ps a | grep "dialog" | wc -l) -gt 2 ] ; do sleep 0.5; done
-dialog_package_install "Termux-box MOD" "Installing necessary packages" "jq" &
+kill_current_dialog
+dialog_loading "Installing necessary packages" &
 pkg install x11-repo -y &>>/sdcard/termux-box/Installer.log
 pkg install pulseaudio -y &>>/sdcard/termux-box/Installer.log
 pkg install xwayland -y &>>/sdcard/termux-box/Installer.log
@@ -49,6 +50,8 @@ pkg install wget -y &>>/sdcard/termux-box/Installer.log
 pkg install tsu -y &>>/sdcard/termux-box/Installer.log
 pkg install root-repo -y &>>/sdcard/termux-box/Installer.log
 pkg install jq -y &>>/sdcard/termux-box/Installer.log
+pkg install pv -y &>>/sdcard/termux-box/Installer.log
+kill_current_dialog
 dialog_progressbar_wget "Termux-box MOD" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
 dialog_progressbar_tar "termux-style.tar.xz" "J"
 
@@ -57,8 +60,8 @@ dialog_progressbar_tar "termux-style.tar.xz" "J"
 apply-termux-style
 
 
-rm -rf $HOME/termux-box
-mkdir -p $HOME/termux-box
+rm -rf $HOME/termux-box &>/dev/null
+mkdir -p $HOME/termux-box &>/dev/null
 cd $HOME/termux-box
 
 dialog_menu "Termux-Box" "Install Termux-x11" \
