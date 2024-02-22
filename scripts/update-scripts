@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [ ! -f latest_commit.txt ]
+if [ ! -f $HOME/termux-box/latest_commit.txt ]
 then
-    curl -s "https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1" | jq -r '.[0].sha' > latest_commit.txt
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1" | jq -r '.[0].sha' > $HOME/termux-box/latest_commit.txt
 fi
 
 # Get the latest commit SHA from the repository
 latest_commit=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1" | jq -r '.[0].sha')
 
 # Check if the latest commit SHA is different from the one you have
-if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
+if [ "$latest_commit" != "$(cat $HOME/termux-box/latest_commit.txt 2>/dev/null)" ]; then
   
   if [ "$(curl -s 'https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1' | jq -r '.[0].commit.message' | awk -F ' ' '{print $1}')" == "NFU" ]; then
     dialog_yesno "Do you want to perform a FULL update of termux-box now?" "There is a new commit!"
@@ -17,9 +17,10 @@ if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
       rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
       cd ~/
       curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x install && ./install
-      echo "$latest_commit" > latest_commit.txt
+      echo "$latest_commit" > $HOME/termux-box/latest_commit.txt
     fi
   else 
+    cd ~
     rm -rf $HOME/dialogs $HOME/dialogs.rc $HOME/loop $HOME/termux-style.tar.xz $HOME/termux-style $PREFIX/bin/termux-box $HOME/termux-box/start-proot.sh $HOME/termux-box/start-chroot.sh $HOME/termux-box/update-scripts &>/dev/null
     curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
     curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
@@ -35,25 +36,27 @@ if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
     chmod +x start-chroot.sh
     dialog_progressbar_wget "Termux-box MOD" "Downloading update-scripts" "https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts" "update-scripts"
     chmod +x update-scripts
+    cd ~
     dialog_progressbar_wget "Termux-box MOD" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
     dialog_progressbar_tar "termux-style.tar.xz" "J"
 
     . $HOME/termux-style/termux-style
 
     apply-termux-style
+    echo "$latest_commit" > $HOME/termux-box/latest_commit.txt
   fi
 fi
 
-if [ ! -f latest_release.txt ]
+if [ ! -f $HOME/termux-box/latest_release.txt ]
 then
-    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at' > latest_release.txt
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at' > $HOME/termux-box/latest_release.txt
 fi
 
 # Get the latest release tag from the repository
 latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at')
 
 # Check if the latest release tag is different from the one you have
-if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
+if [ "$latest_release" != "$(cat $HOME/termux-box/latest_release.txt 2>/dev/null)" ]; then
   
   dialog_yesno "It's STRONGLY recommended to update this, since it would come with some new functions and wine-custom versions, but it isn't mandatory if you're happy with the actual performance." "There is a new release!"
   if [ "$?" = "0" ]
@@ -88,7 +91,7 @@ if [ "$latest_release" != "$(cat latest_release.txt 2>/dev/null)" ]; then
   touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
 fi
 
-if [ ! -f latest_patch.txt ]
+if [ ! -f $HOME/termux-box/latest_patch.txt ]
 then
     curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/124714593" | jq -r '.assets[] | select(.name == "patch.tar.xz").updated_at' > latest_patch.txt
 fi
