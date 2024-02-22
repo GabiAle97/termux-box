@@ -94,14 +94,14 @@ fi
 
 if [ ! -f $HOME/termux-box/latest_patch.txt ]
 then
-    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/124714593" | jq -r '.assets[] | select(.name == "patch.tar.xz").updated_at' > latest_patch.txt
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/124714593" | jq -r '.assets[] | select(.name == "patch.tar.xz").updated_at' > $HOME/termux-box/latest_patch.txt
 fi
 
 # Get the latest release tag from the repository
 latest_patch=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/124714593" | jq -r '.assets[] | select(.name == "patch.tar.xz").updated_at')
 
 # Check if the latest release tag is different from the one you have
-if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
+if [ "$latest_patch" != "$(cat $HOME/termux-box/latest_patch.txt 2>/dev/null)" ]; then
   dialog_yesno "It's STRONGLY recommended to update this, since it would come with some fixes and/or new turnip/dxvk/vkd3d/wined3d versions, but it isn't mandatory if you're happy with the actual performance." "There is a new patch!"
   if [ "$?" = "0" ]
   then 
