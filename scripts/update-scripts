@@ -113,7 +113,7 @@ if [ "$latest_patch" != "$(cat $HOME/termux-box/latest_patch.txt 2>/dev/null)" ]
       rm -rf patch.tar.xz &>>/sdcard/termux-box/Installer.log
       cd
       echo "$latest_patch" > $HOME/termux-box/latest_patch.txt
+      touch $HOME/termux-box/ubuntu-fs/opt/prefix-apply-patch
   fi
   cd ~
-  touch $HOME/termux-box/ubuntu-fs/opt/prefix-apply-patch
 fi
