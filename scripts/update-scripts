@@ -11,13 +11,37 @@ latest_commit=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/commi
 # Check if the latest commit SHA is different from the one you have
 if [ "$latest_commit" != "$(cat latest_commit.txt 2>/dev/null)" ]; then
   
-  dialog_yesno "Do you want to perform a FULL update of termux-box now?" "There is a new commit!"
-  if [ "$?" = "0" ]; then
-		rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
-    cd ~/
-    curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x install && ./install
-    echo "$latest_commit" > latest_commit.txt
-	fi
+  if [ "$(curl -s 'https://api.github.com/repos/GabiAle97/termux-box/commits?path=scripts&per_page=1' | jq -r '.[0].commit.message' | awk -F ' ' '{print $1}')" == "NFU" ]; then
+    dialog_yesno "Do you want to perform a FULL update of termux-box now?" "There is a new commit!"
+    if [ "$?" = "0" ]; then
+      rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
+      cd ~/
+      curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x install && ./install
+      echo "$latest_commit" > latest_commit.txt
+    fi
+  else 
+    rm -rf $HOME/dialogs $HOME/dialogs.rc $HOME/loop $HOME/termux-style.tar.xz $HOME/termux-style $PREFIX/bin/termux-box $HOME/termux-box/start-proot.sh $HOME/termux-box/start-chroot.sh $HOME/termux-box/update-scripts &>/dev/null
+    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
+    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
+    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
+    chmod +x loop
+    cd $HOME/termux-box
+    dialog_progressbar_wget "Termux-box MOD" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box" "termux-box"
+    chmod +x termux-box
+    mv termux-box $PREFIX/bin
+    dialog_progressbar_wget "Termux-box MOD" "Downloading start-proot.sh" "https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh" "start-proot.sh"
+    dialog_progressbar_wget "Termux-box MOD" "Downloading start-chroot.sh" "https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh" "start-chroot.sh"
+    chmod +x start-proot.sh
+    chmod +x start-chroot.sh
+    dialog_progressbar_wget "Termux-box MOD" "Downloading update-scripts" "https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts" "update-scripts"
+    chmod +x update-scripts
+    dialog_progressbar_wget "Termux-box MOD" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
+    dialog_progressbar_tar "termux-style.tar.xz" "J"
+
+    . $HOME/termux-style/termux-style
+
+    apply-termux-style
+  fi
 fi
 
 if [ ! -f latest_release.txt ]
@@ -87,5 +111,5 @@ if [ "$latest_patch" != "$(cat latest_patch.txt 2>/dev/null)" ]; then
       echo "$latest_patch" > $HOME/termux-box/latest_patch.txt
   fi
   cd ~
-  touch $HOME/termux-box/ubuntu-fs/opt/scripts-updated
+  touch $HOME/termux-box/ubuntu-fs/opt/prefix-apply-patch
 fi
