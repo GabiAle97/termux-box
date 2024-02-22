@@ -26,6 +26,7 @@ if [ "$latest_commit" != "$(cat $HOME/termux-box/latest_commit.txt 2>/dev/null)"
     curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
     curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
     chmod +x loop
+    . $HOME/dialogs
     cd $HOME/termux-box
     dialog_progressbar_wget "Termux-box MOD" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box" "termux-box"
     chmod +x termux-box
