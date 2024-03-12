@@ -15,7 +15,7 @@ Requisitos:
 Abrir Termux y pegar el siguiente comando: 
 
 ```
-curl -s -o x https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x x && ./x
+curl -s -o x https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/install && chmod +x x && ./x
 ```
 
 Cerca del final de la instalación, será necesario completar una selección geográfica simple. La instalación es lenta, se puede salir de Termux mientras se ejecuta la instalación y luego de un tiempo volver a completar dicha selección, y habrá terminado.
