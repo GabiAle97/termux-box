@@ -9,7 +9,7 @@ cd $HOME/termux-box
 apply-termux-style
 
 if [ ! -e ubuntu-fs/opt/wine ]; then
-    dialog_menu "Termux-Box" "Select which Wine to download: " \
+    dialog_menu "Termux-box MOD-WoW64" "Select which Wine to download: " \
     "1" "9.2 staging" \
     "2" "9.3 staging" \
     "3" "9.4 staging-tkg"
@@ -50,7 +50,7 @@ cp -n ubuntu-fs/opt/dxvk.conf /sdcard/termux-box >/dev/null 2>&1
 cp -n ubuntu-fs/opt/vkd3d.conf /sdcard/termux-box >/dev/null 2>&1
 negus=$(cat ubuntu-fs/opt/script.conf)
 if [ "$negus" = "" ]; then
-    dialog_menu "Termux-Box" "Select containerization method" \
+    dialog_menu "Termux-box MOD-WoW64" "Select containerization method" \
     "1" "Proot" \
     "2" "Chroot (root only)"
     export oleg=$?

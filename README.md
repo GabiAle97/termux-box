@@ -1,7 +1,7 @@
 ![logo](icon/logoEmuTesting.png "logo")
 
 ## About
-`Termux-box MOD` es simplemente [Termux-box](https://github.com/olegos2/termux-box) pero con varias modificaciones sobre rendimiento y compatibilidades. Tiene las mísmas características: (rootfs preconfigurado con [Box64](https://github.com/ptitSeb/box64), [Wine](https://www.winehq.org/) y [DXVK](https://github.com/doitsujin/dxvk) instalados.)
+`Termux-box MOD-WoW64` es simplemente [Termux-box](https://github.com/olegos2/termux-box) pero con varias modificaciones sobre rendimiento y compatibilidades. Tiene las mísmas características: (rootfs preconfigurado con [Box64](https://github.com/ptitSeb/box64), [Wine](https://www.winehq.org/) y [DXVK](https://github.com/doitsujin/dxvk) instalados.)
 
 Está enfocado en el funcionamiento de `Resident Evil 7: Biohazard`, pero en el camino han funcionado otros juegos que no funcionaban, tal como `Gang Beasts`. 
 
@@ -10,7 +10,7 @@ Despues de instalado, el comando de inicio es `termux-box`
 
 Requisitos:
 [Termux](https://f-droid.org/repo/com.termux_118.apk),
-[Termux-X11](https://raw.githubusercontent.com/olegos2/termux-box/main/components/termux-x11-arm64-v8a-debug-latest.apk) para poder usar Turnip dri3.
+[Termux-X11](https://raw.githubusercontent.com/olegos2/termux-box/WoW64/components/termux-x11-arm64-v8a-debug-latest.apk) para poder usar Turnip dri3.
 
 Abrir Termux y pegar el siguiente comando: 
 

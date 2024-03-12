@@ -89,7 +89,7 @@ function dialog_package_install {
 }
 
 function dialog_progressbar_tar {
-	(pv -n $1 | tar x${2}f - ) 2>&1 | dialog --title "Termux-box MOD" --gauge "Extracting $1..." 6 50
+	(pv -n $1 | tar x${2}f - ) 2>&1 | dialog --title "Termux-box MOD-WoW64" --gauge "Extracting $1..." 6 50
 }
 
 function dialog_progressbar_dpkg {
@@ -103,5 +103,5 @@ function dialog_progressbar_dpkg {
 			sleep 1
             if ! ps -p $dpkg_pid > /dev/null; then echo "100"; fi
         done
-    } | dialog --title "Termux-box MOD" --gauge "Installing $1..." 0 0
+    } | dialog --title "Termux-box MOD-WoW64" --gauge "Installing $1..." 0 0
 }

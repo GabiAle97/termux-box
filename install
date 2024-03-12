@@ -5,9 +5,9 @@ apt-get clean -y > /dev/null 2>&1
 if ! dpkg -l | grep -q -w "ncurses-utils"; then pkg install ncurses-utils -y; fi &>/dev/null
 
 if [ ! -f dialogs ]; then
-    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
-    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
-    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
+    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/scripts/dialogs &>/dev/null
+    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/scripts/dialog.rc &>/dev/null
+    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/scripts/loop &>/dev/null
     chmod +x loop
 fi
 
@@ -15,7 +15,7 @@ if [ -e $HOME/dialogs ] && dpkg -l | grep -q -w "ncurses-utils"; then
     . $HOME/dialogs
 else
     echo ""
-    echo "Something went wrong with termux repositories. You may have to clean termux data and reinstall termux-box mod"
+    echo "Something went wrong with termux repositories. You may have to clean termux data and reinstall Termux-box MOD-WoW64"
     echo ""
     exit 0
 fi
@@ -52,7 +52,7 @@ pkg install root-repo -y &>>/sdcard/termux-box/Installer.log
 pkg install jq -y &>>/sdcard/termux-box/Installer.log
 pkg install pv -y &>>/sdcard/termux-box/Installer.log
 kill_current_dialog
-dialog_progressbar_wget "Termux-box MOD" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
 dialog_progressbar_tar "termux-style.tar.xz" "J"
 
 . $HOME/termux-style/termux-style
@@ -72,7 +72,7 @@ kill_current_dialog
 
 cd $HOME/termux-box
 
-dialog_progressbar_wget "Termux-box MOD" "Downloading Enhanced Mantic" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-wow64.tar.xz" "rootfs.tar.xz"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading Enhanced Mantic" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-wow64.tar.xz" "rootfs.tar.xz"
 export core=2
 
 dialog_progressbar_tar "rootfs.tar.xz" "J"
@@ -83,24 +83,24 @@ if [ $core = 2 ]
 then
     touch $HOME/termux-box/ubuntu-fs/opt/mantic-core-system
 fi
-dialog_progressbar_wget "Termux-box MOD" "Downloading scripts.tar.gz" "https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts-wow64.tar.gz" "scripts.tar.gz"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading scripts.tar.gz" "https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts-wow64.tar.gz" "scripts.tar.gz"
 dialog_progressbar_tar "scripts.tar.gz" "z"
 rm -rf scripts.tar.gz &>>/sdcard/termux-box/Installer.log
 
 cd $HOME/termux-box
-dialog_progressbar_wget "Termux-box MOD" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box" "termux-box"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/termux-box" "termux-box"
 chmod +x termux-box
 mv termux-box $PREFIX/bin
-dialog_progressbar_wget "Termux-box MOD" "Downloading start-proot.sh" "https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh" "start-proot.sh"
-dialog_progressbar_wget "Termux-box MOD" "Downloading start-chroot.sh" "https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh" "start-chroot.sh"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading start-proot.sh" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/start-proot.sh" "start-proot.sh"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading start-chroot.sh" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/start-chroot.sh" "start-chroot.sh"
 chmod +x start-proot.sh
 chmod +x start-chroot.sh
-dialog_progressbar_wget "Termux-box MOD" "Downloading update-scripts" "https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts" "update-scripts"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading update-scripts" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/update-scripts" "update-scripts"
 chmod +x update-scripts
 
 
 cd $HOME/termux-box/ubuntu-fs/opt
-dialog_progressbar_wget "Termux-box MOD" "Downloading patch.tar.xz" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz" "patch.tar.xz"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading patch.tar.xz" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/patch.tar.xz" "patch.tar.xz"
 rm -rf d3d &>>/sdcard/termux-box/Installer.log
 rm -rf mesa &>/dev/null
 dialog_progressbar_tar "patch.tar.xz" "J"
@@ -112,7 +112,7 @@ curl -s "https://api.github.com/repos/HansKristian-Work/vkd3d-proton/releases" |
 expr $(cat countge) + $(cat countkron) > totalcount
 
 cd
-dialog_message "Termux-Box Mod" "Successfully installed!"
+dialog_message "Termux-box MOD-WoW64" "Successfully installed!"
 
 rm -rf "$0"
 exec $PREFIX/bin/termux-box

@@ -16,29 +16,29 @@ if [ "$latest_commit" != "$(cat $HOME/termux-box/latest_commit.txt 2>/dev/null)"
     if [ "$?" = "0" ]; then
       rm $HOME/termux-box/ubuntu-fs/opt/updated-ubuntu
       cd ~/
-      curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/main/install && chmod +x install && ./install
+      curl -o install https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/install && chmod +x install && ./install
       echo "$latest_commit" > $HOME/termux-box/latest_commit.txt
     fi
   else 
     cd ~
     rm -rf $HOME/dialogs $HOME/dialogs.rc $HOME/loop $HOME/termux-style.tar.xz $HOME/termux-style $PREFIX/bin/termux-box $HOME/termux-box/start-proot.sh $HOME/termux-box/start-chroot.sh $HOME/termux-box/update-scripts &>/dev/null
-    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialogs &>/dev/null
-    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/dialog.rc &>/dev/null
-    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/main/scripts/loop &>/dev/null
+    curl -s -o dialogs https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/scripts/dialogs &>/dev/null
+    curl -s -o dialog.rc https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/scripts/dialog.rc &>/dev/null
+    curl -s -o loop https://raw.githubusercontent.com/GabiAle97/termux-box/WoW64/scripts/loop &>/dev/null
     chmod +x loop
     . $HOME/dialogs
     cd $HOME/termux-box
-    dialog_progressbar_wget "Termux-box MOD" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/main/scripts/termux-box" "termux-box"
+    dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading termux-box" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/termux-box" "termux-box"
     chmod +x termux-box
     mv termux-box $PREFIX/bin
-    dialog_progressbar_wget "Termux-box MOD" "Downloading start-proot.sh" "https://github.com/GabiAle97/termux-box/raw/main/scripts/start-proot.sh" "start-proot.sh"
-    dialog_progressbar_wget "Termux-box MOD" "Downloading start-chroot.sh" "https://github.com/GabiAle97/termux-box/raw/main/scripts/start-chroot.sh" "start-chroot.sh"
+    dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading start-proot.sh" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/start-proot.sh" "start-proot.sh"
+    dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading start-chroot.sh" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/start-chroot.sh" "start-chroot.sh"
     chmod +x start-proot.sh
     chmod +x start-chroot.sh
-    dialog_progressbar_wget "Termux-box MOD" "Downloading update-scripts" "https://github.com/GabiAle97/termux-box/raw/main/scripts/update-scripts" "update-scripts"
+    dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading update-scripts" "https://github.com/GabiAle97/termux-box/raw/WoW64/scripts/update-scripts" "update-scripts"
     chmod +x update-scripts
     cd ~
-    dialog_progressbar_wget "Termux-box MOD" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
+    dialog_progressbar_wget "Termux-box MOD-WoW64" "Applying Termux Style" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/termux-style.tar.xz" "termux-style.tar.xz"
     dialog_progressbar_tar "termux-style.tar.xz" "J"
 
     . $HOME/termux-style/termux-style
