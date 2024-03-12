@@ -50,11 +50,11 @@ fi
 
 if [ ! -f $HOME/termux-box/latest_release.txt ]
 then
-    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at' > $HOME/termux-box/latest_release.txt
+    curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts-wow64.tar.gz").updated_at' > $HOME/termux-box/latest_release.txt
 fi
 
 # Get the latest release tag from the repository
-latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts.tar.gz").updated_at')
+latest_release=$(curl -s "https://api.github.com/repos/GabiAle97/termux-box/releases/latest" | jq -r '.assets[] | select(.name == "scripts-wow64.tar.gz").updated_at')
 
 # Check if the latest release tag is different from the one you have
 if [ "$latest_release" != "$(cat $HOME/termux-box/latest_release.txt 2>/dev/null)" ]; then
@@ -73,9 +73,9 @@ if [ "$latest_release" != "$(cat $HOME/termux-box/latest_release.txt 2>/dev/null
         mv "$file" "$filename.conf.backup"
       done
       cd $HOME/termux-box/ubuntu-fs/opt/
-      wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz
-      tar -xf scripts.tar.gz
-      rm -rf scripts.tar.gz
+      wget https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts-wow64.tar.gz
+      tar -xf scripts-wow64.tar.gz
+      rm -rf scripts-wow64.tar.gz
       for file in *.conf.backup; do
         filename=$(basename "$file" .conf.backup)
         mv "$file" "$filename.conf"
