@@ -72,7 +72,7 @@ kill_current_dialog
 
 cd $HOME/termux-box
 
-dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading Enhanced Mantic" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz" "rootfs.tar.xz"
+dialog_progressbar_wget "Termux-box MOD-WoW64" "Downloading Enhanced Mantic" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz" "rootfs.tar.xz"
 export core=2
 
 dialog_progressbar_tar "rootfs.tar.xz" "J"
