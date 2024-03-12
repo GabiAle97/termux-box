@@ -1,7 +1,7 @@
 ![logo](icon/logoEmuTesting.png "logo")
 
 ## About
-`Termux-box MOD` es simplemente [Termux-box](https://github.com/olegos2/termux-box) pero con varias modificaciones sobre rendimiento y compatibilidades. Tiene las mísmas características: (rootfs preconfigurado con [Box86](https://github.com/ptitSeb/box86), [Box64](https://github.com/ptitSeb/box64), [Wine](https://www.winehq.org/) y [DXVK](https://github.com/doitsujin/dxvk) instalados.)
+`Termux-box MOD` es simplemente [Termux-box](https://github.com/olegos2/termux-box) pero con varias modificaciones sobre rendimiento y compatibilidades. Tiene las mísmas características: (rootfs preconfigurado con [Box64](https://github.com/ptitSeb/box64), [Wine](https://www.winehq.org/) y [DXVK](https://github.com/doitsujin/dxvk) instalados.)
 
 Está enfocado en el funcionamiento de `Resident Evil 7: Biohazard`, pero en el camino han funcionado otros juegos que no funcionaban, tal como `Gang Beasts`. 
 
@@ -49,7 +49,7 @@ En `preferences`, la configuración probada fue:
 * `DYNAREC CONFIGURATION`: Better Performance (4)
 * `Cores amount`: 4 (4-7)
 * `Run services on startup`: enabled
-* `Change box86/box64`: updated build
+* `Change box64`: updated build
 * `Custom Wine`: Wine-GE-proton-8.13 (opción 2) 
 
 Volver atrás y ejecutar `box64 wine64 with turnip dri3`, luego abrir Termux-X11
@@ -91,8 +91,6 @@ Y Gracias a los consejos de [MatiasEP](https://github.com/MatiasEP) y Mr. Purple
 ## Third party applications
 
 [Box64](https://github.com/ptitSeb/box64) MIT license
-
-[Box86](https://github.com/ptitSeb/box86) MIT license
 
 [Proot](https://github.com/termux/proot) GPL-2.0 license
 

@@ -1,4 +1,5 @@
-rootfs.tar.xz
+scripts/rootfs-mantic
+rootfs-mantic.tar.xz
 scripts/scripts
 patch.tar.xz
 scripts/patch (1)

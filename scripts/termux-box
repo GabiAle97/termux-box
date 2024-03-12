@@ -10,18 +10,18 @@ apply-termux-style
 
 if [ ! -e ubuntu-fs/opt/wine ]; then
     dialog_menu "Termux-Box" "Select which Wine to download: " \
-    "1" "9.0 staging" \
-    "2" "8.25 ge-custom" \
-    "3" "8.0-5 proton"
+    "1" "9.2 staging" \
+    "2" "9.3 staging" \
+    "3" "9.4 staging-tkg"
     case $? in
     1)
-        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.0 staging" "https://github.com/Kron4ek/Wine-Builds/releases/download/9.0/wine-9.0-staging-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
+        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.2 staging" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Wine9.2/wine-9.2-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         ;;
     2)
-        dialog_progressbar_wget "Install Custom Wine" "Downloading WineGE 8.25" "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-25/wine-lutris-GE-Proton8-25-x86_64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
+        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.3 staging" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Wine9.3/wine-9.3-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         ;;
     3)
-        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine Proton 8.0-5" "https://github.com/Kron4ek/Wine-Builds/releases/download/proton-8.0-5/wine-proton-8.0-5-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
+        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.4 staging-tkg" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Wine9.4/wine-9.4-staging-tkg-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         touch ubuntu-fs/opt/patch-re8
         ;;
     esac

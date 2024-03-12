@@ -64,45 +64,16 @@ rm -rf $HOME/termux-box &>/dev/null
 mkdir -p $HOME/termux-box &>/dev/null
 cd $HOME/termux-box
 
-dialog_menu "Termux-Box" "Install Termux-x11" \
-"1" "Default Termux-x11 (Tested and stable for Android 13 and below)" \
-"2" "Termux-x11-nightly (For Android 14)" 
-case $? in
-1)
-    dialog_loading "Installing Termux-x11 default" &
-    wget "https://github.com/GabiAle97/termux-box/raw/main/components/termux-x11-1.02.07-0-all.deb" -O "termux-x11-1.02.07-0-all.deb" &>>/sdcard/termux-box/Installer.log
-    dpkg -i "termux-x11-1.02.07-0-all.deb" &>>/sdcard/termux-box/Installer.log
-    rm -rf termux-x11-1.02.07-0-all.deb &>>/sdcard/termux-box/Installer.log
-    ;;
-2)
-    dialog_loading "Installing Termux-x11-nightly" &
-    pkg install termux-x11-nightly -y &>>/sdcard/termux-box/Installer.log
-    ;;
-255)
-    exit 0
-    ;;
-esac
+dialog_loading "Installing Termux-x11-nightly" &
+pkg install termux-x11-nightly -y &>>/sdcard/termux-box/Installer.log
 
 kill_current_dialog
 
 
 cd $HOME/termux-box
-dialog_menu "Termux-Box" "Download preconfigured Rootfs" \
-"1" "Default Jammy (stable, missing libs)" \
-"2" "Enhanced Mantic (Performance, useful for Wine-GE)" 
-case $? in
-1)
-    dialog_progressbar_wget "Termux-box MOD" "Downloading Default Jammy" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs.tar.xz" "rootfs.tar.xz"
-    export core=1
-    ;;
-2)
-    dialog_progressbar_wget "Termux-box MOD" "Downloading Enhanced Mantic" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-mantic.tar.xz" "rootfs.tar.xz"
-    export core=2
-    ;;
-255)
-    exit 0
-    ;;
-esac
+
+dialog_progressbar_wget "Termux-box MOD" "Downloading Enhanced Mantic" "https://github.com/GabiAle97/termux-box/releases/download/Dll_overrides/rootfs-wow64.tar.xz" "rootfs.tar.xz"
+export core=2
 
 dialog_progressbar_tar "rootfs.tar.xz" "J"
 rm -rf rootfs.tar.xz &>>/sdcard/termux-box/Installer.log
@@ -112,7 +83,7 @@ if [ $core = 2 ]
 then
     touch $HOME/termux-box/ubuntu-fs/opt/mantic-core-system
 fi
-dialog_progressbar_wget "Termux-box MOD" "Downloading scripts.tar.gz" "https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts.tar.gz" "scripts.tar.gz"
+dialog_progressbar_wget "Termux-box MOD" "Downloading scripts.tar.gz" "https://github.com/GabiAle97/termux-box/releases/download/mod_box/scripts-wow64.tar.gz" "scripts.tar.gz"
 dialog_progressbar_tar "scripts.tar.gz" "z"
 rm -rf scripts.tar.gz &>>/sdcard/termux-box/Installer.log
 
