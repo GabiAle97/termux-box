@@ -10,18 +10,18 @@ apply-termux-style
 
 if [ ! -e ubuntu-fs/opt/wine ]; then
     dialog_menu "Termux-box MOD-WoW64" "Select which Wine to download: " \
-    "1" "9.2 staging" \
-    "2" "9.3 staging" \
-    "3" "9.4 staging-tkg"
+    "1" "9.3 staging" \
+    "2" "9.4 staging-tkg" \
+    "3" "Proton 9.0 Bleeding-Edge"
     case $? in
     1)
-        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.2 staging" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Wine9.2/wine-9.2-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
-        ;;
-    2)
         dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.3 staging" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Wine9.3/wine-9.3-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         ;;
-    3)
+    2)
         dialog_progressbar_wget "Install Custom Wine" "Downloading Wine 9.4 staging-tkg" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Wine9.4/wine-9.4-staging-tkg-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
+        ;;
+    3)
+        dialog_progressbar_wget "Install Custom Wine" "Downloading Wine Proton 9.0 Bleeding Edge" "https://github.com/GabiAle97/Wine-WoW64-Builds/releases/download/Proton9.0-BE/wine-proton-exp-9.0-fd4a312a302-exp-wow64-amd64.tar.xz" "ubuntu-fs/opt/wine.tar.xz"
         touch ubuntu-fs/opt/patch-re8
         ;;
     esac
